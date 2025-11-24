@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multischool AI</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background: #0a0a0f;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        color: #e6edf3;
+        position: relative;
+        overflow: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at 25% 25%,
+            rgba(120, 119, 198, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 75% 75%,
+            rgba(255, 119, 198, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 50% 50%,
+            rgba(120, 219, 255, 0.08) 0%,
+            transparent 50%
+          );
+        animation: backgroundFloat 20s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      @keyframes backgroundFloat {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+        25% {
+          transform: translate(-20px, -20px) scale(1.05);
+        }
+        50% {
+          transform: translate(20px, -10px) scale(0.95);
+        }
+        75% {
+          transform: translate(-10px, 20px) scale(1.02);
+        }
+      }
+
+      .header {
+        background: rgba(13, 17, 23, 0.95);
+        border-bottom: 1px solid #30363d;
+        padding: 26px 44px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+        margin: 0 0 0 30px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        font-size: 24px;
+        color: #58a6ff;
+      }
+
+      .main-container {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+        z-index: 10;
+      }
+
+      .sidebar {
+        width: 260px;
+        background: rgba(22, 27, 34, 0.95);
+        border-right: 1px solid #30363d;
+        padding: 16px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        backdrop-filter: blur(20px);
+      }
+
+      .new-chat-btn {
+        background: #238636;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 16px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background 0.2s;
+      }
+
+      .new-chat-btn:hover {
+        background: #2ea043;
+      }
+
+      .suggestion-btn {
+        width: 100%;
+        background: none;
+        border: 1px solid #30363d;
+        border-radius: 8px;
+        padding: 8px 12px;
+        text-align: left;
+        font-size: 13px;
+        color: #8b949e;
+        cursor: pointer;
+        margin-bottom: 4px;
+        transition: all 0.2s;
+      }
+
+      .suggestion-btn:hover {
+        background: #21262d;
+        color: #f0f6fc;
+      }
+
+      .chat-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: rgba(13, 17, 23, 0.4);
+        backdrop-filter: blur(10px);
+      }
+
+      .chat-area {
+        flex: 1;
+        overflow-y: auto;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        max-width: 800px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .message {
+        display: flex;
+        gap: 12px;
+        animation: slideUp 0.3s ease;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .message.user {
+        justify-content: flex-end;
+      }
+
+      .message.user .message-content {
+        background: linear-gradient(135deg, #1f6feb, #388bfd);
+        color: white;
+        padding: 12px 16px;
+        border-radius: 18px 18px 4px 18px;
+        max-width: 70%;
+      }
+
+      .message.assistant {
+        justify-content: flex-start;
+      }
+
+      .message.assistant .message-content {
+        background: rgba(22, 27, 34, 0.8);
+        border: 1px solid #30363d;
+        padding: 16px;
+        border-radius: 12px;
+        max-width: 85%;
+        backdrop-filter: blur(10px);
+      }
+
+      .message-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .user-avatar {
+        background: linear-gradient(135deg, #1f6feb, #388bfd);
+        color: white;
+      }
+
+      .assistant-avatar {
+        background: linear-gradient(135deg, #7c3aed, #a855f7);
+        color: white;
+        font-weight: 600;
+      }
+
+      .typing-indicator {
+        display: none;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .typing-dots {
+        display: flex;
+        gap: 4px;
+        padding: 16px;
+        background: rgba(22, 27, 34, 0.8);
+        border: 1px solid #30363d;
+        border-radius: 12px;
+      }
+
+      .typing-dot {
+        width: 8px;
+        height: 8px;
+        background: #8b949e;
+        border-radius: 50%;
+        animation: typing 1.4s infinite;
+      }
+
+      .typing-dot:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes typing {
+        0%,
+        60%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.4;
+        }
+        30% {
+          transform: translateY(-10px);
+          opacity: 1;
+        }
+      }
+
+      .input-container {
+        background: rgba(13, 17, 23, 0.95);
+        border-top: 1px solid #30363d;
+        padding: 20px 24px;
+        backdrop-filter: blur(20px);
+      }
+
+      .input-area {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .input-area input {
+        width: 100%;
+        padding: 14px 50px 14px 16px;
+        border: 2px solid #30363d;
+        border-radius: 24px;
+        font-size: 16px;
+        outline: none;
+        background: rgba(13, 17, 23, 0.8);
+        color: #e6edf3;
+        transition: border-color 0.2s;
+      }
+
+      .input-area input:focus {
+        border-color: #1f6feb;
+      }
+
+      .input-area input::placeholder {
+        color: #8b949e;
+      }
+
+      .send-btn {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, #1f6feb, #388bfd);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+      }
+
+      .send-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .welcome-screen {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 40px;
+        gap: 32px;
+      }
+
+      .welcome-title {
+        font-size: 32px;
+        font-weight: 600;
+        background: linear-gradient(135deg, #7c3aed, #a855f7, #58a6ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 8px;
+      }
+
+      .welcome-subtitle {
+        font-size: 18px;
+        color: #8b949e;
+        max-width: 600px;
+      }
+
+      .example-prompts {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 16px;
+        max-width: 800px;
+        width: 100%;
+      }
+
+      .example-prompt {
+        background: rgba(22, 27, 34, 0.6);
+        border: 1px solid #30363d;
+        border-radius: 12px;
+        padding: 20px;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: left;
+      }
+
+      .example-prompt:hover {
+        background: rgba(33, 38, 45, 0.8);
+        border-color: #484f58;
+        transform: translateY(-2px);
+      }
+
+      .example-prompt-title {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #f0f6fc;
+      }
+
+      .example-prompt-text {
+        font-size: 14px;
+        color: #8b949e;
+      }
+
+      .feature-card {
+        background: rgba(22, 27, 34, 0.8);
+        border: 1px solid #30363d;
+        border-radius: 12px;
+        padding: 16px;
+        margin: 8px 0;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .feature-card:hover {
+        background: rgba(33, 38, 45, 0.9);
+        border-color: #484f58;
+        transform: translateX(4px);
+      }
+
+      .quiz-option {
+        background: rgba(22, 27, 34, 0.8);
+        border: 1px solid #30363d;
+        border-radius: 8px;
+        padding: 12px 16px;
+        margin: 8px 0;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .quiz-option:hover {
+        background: rgba(31, 111, 235, 0.2);
+        border-color: #1f6feb;
+      }
+
+      /* Tela de loading */
+      #loadingScreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #0a0a0f;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        z-index: 9999;
+        overflow: hidden;
+        animation: fadeOut 0.8s ease forwards;
+        animation-delay: 2.8s; /* tempo até sumir */
+      }
+
+      .loading-logo {
+        font-size: 28px;
+        font-weight: bold;
+        background: linear-gradient(135deg, #7c3aed, #a855f7, #58a6ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+      }
+
+      .spinner {
+        width: 60px;
+        height: 60px;
+        border: 6px solid rgba(255, 255, 255, 0.1);
+        border-top: 6px solid #58a6ff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 16px;
+      }
+
+      .loading-text {
+        font-size: 14px;
+        color: #8b949e;
+        letter-spacing: 2px;
+        animation: pulse 1.5s infinite;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      a:hover {
+  text-decoration: underline; /* ou outra indicação visual */
+}
+
+      /* Partículas */
+      .particles {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        z-index: -1;
+      }
+      .particle {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: #58a6ff;
+        border-radius: 50%;
+        opacity: 0.6;
+        animation: floatUp 6s linear infinite;
+      }
+      .particle:nth-child(2) {
+        left: 20%;
+        animation-delay: 1s;
+        background: #a855f7;
+      }
+      .particle:nth-child(3) {
+        left: 40%;
+        animation-delay: 2s;
+        background: #7c3aed;
+      }
+      .particle:nth-child(4) {
+        left: 60%;
+        animation-delay: 3s;
+        background: #3fb950;
+      }
+      .particle:nth-child(5) {
+        left: 80%;
+        animation-delay: 4s;
+        background: #f85149;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      @keyframes floatUp {
+        0% {
+          bottom: -10px;
+          opacity: 0;
+          transform: scale(0.5);
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          bottom: 110%;
+          opacity: 0;
+          transform: scale(1.2);
+        }
+      }
+      @keyframes fadeOut {
+        to {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+      /* Imagem flutuante */
+      .loading-image {
+        width: 280px; /* ajusta conforme a tua imagem */
+        height: auto;
+        margin-bottom: 20px;
+        animation: floatY 3s ease-in-out infinite;
+      }
+
+      @keyframes floatY {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div id="loadingScreen">
+      <img src="img/bg/bot.png" alt="Logo Multischool" class="loading-image" />
+      <div class="loading-logo"><i class="bi bi-robot"></i> Multischool AI</div>
+      <div class="spinner"></div>
+      <div class="loading-text">A carregar...</div>
+      <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+      </div>
+    </div>
+
+    <script>
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.getElementById("loadingScreen").style.display = "none";
+        }, 7500); // tempo total
+      });
+    </script>
+
+    <div class="header">
+      <div class="logo">
+        <a href="index.html"><i class="bi bi-robot"></i> MultiBot</a>
+      </div>
+    </div>
+
+    <div class="main-container">
+      <div class="sidebar">
+        <button class="new-chat-btn" onclick="newChat()">
+          + Nova conversa
+        </button>
+
+        <div style="margin-top: 16px">
+          <button
+            class="suggestion-btn"
+            onclick="quickSend('Recomenda-me cursos de JavaScript')"
+          >
+            Recomendações de cursos
+          </button>
+          <button
+            class="suggestion-btn"
+            onclick="quickSend('Cria um quiz sobre React')"
+          >
+            Quiz interativo
+          </button>
+          <button
+            class="suggestion-btn"
+            onclick="quickSend('Como está o meu progresso?')"
+          >
+            Ver progresso
+          </button>
+          <button
+            class="suggestion-btn"
+            onclick="quickSend('Próximas lives disponíveis')"
+          >
+            Lives agendadas
+          </button>
+        </div>
+      </div>
+
+      <div class="chat-container">
+        <div class="chat-area" id="chatArea">
+          <div class="welcome-screen" id="welcomeScreen">
+            <div>
+              <h1 class="welcome-title">Como posso ajudar hoje?</h1>
+              <p class="welcome-subtitle">
+                Sou o teu assistente de aprendizagem personalizado. Posso
+                recomendar cursos, criar quizzes, agendar lives e acompanhar o
+                teu progresso.
+              </p>
+            </div>
+
+            <div class="example-prompts">
+              <div
+                class="example-prompt"
+                onclick="quickSend('Preciso de ajuda para escolher um curso de programação')"
+              >
+                <div class="example-prompt-title">
+                  Recomendações personalizadas
+                </div>
+                <div class="example-prompt-text">
+                  Preciso de ajuda para escolher um curso adequado
+                </div>
+              </div>
+
+              <div
+                class="example-prompt"
+                onclick="quickSend('Cria um quiz sobre JavaScript')"
+              >
+                <div class="example-prompt-title">Quiz interativo</div>
+                <div class="example-prompt-text">
+                  Cria um quiz sobre JavaScript
+                </div>
+              </div>
+
+              <div
+                class="example-prompt"
+                onclick="quickSend('Próximas lives sobre design')"
+              >
+                <div class="example-prompt-title">Eventos e lives</div>
+                <div class="example-prompt-text">
+                  Próximas lives sobre design
+                </div>
+              </div>
+
+              <div
+                class="example-prompt"
+                onclick="quickSend('Resume algoritmos de ordenação')"
+              >
+                <div class="example-prompt-title">Resumos inteligentes</div>
+                <div class="example-prompt-text">
+                  Resume algoritmos de ordenação
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="typing-indicator" id="typingIndicator">
+            <div class="message-avatar assistant-avatar">AI</div>
+            <div class="typing-dots">
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-container">
+          <div class="input-area">
+            <input
+              type="text"
+              id="messageInput"
+              placeholder="Escreve aqui a tua mensagem..."
+              maxlength="500"
+            />
+            <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+              →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let chatState = {
+        currentQuiz: null,
+        isWelcomeVisible: true,
+      };
+
+      const quizzes = [
+        {
+          question:
+            "Qual é a principal diferença entre 'let' and 'var' em JavaScript?",
+          options: [
+            "Não há diferença",
+            "Let tem block scope",
+            "Var é mais rápido",
+            "Let é deprecated",
+          ],
+          correct: 1,
+          explanation: "Let tem block scope, enquanto var tem function scope.",
+        },
+        {
+          question: "O que é um design system?",
+          options: [
+            "Um software",
+            "Conjunto de componentes reutilizáveis",
+            "Tipo de layout",
+            "Framework CSS",
+          ],
+          correct: 1,
+          explanation:
+            "Design system é um conjunto de componentes, padrões e guidelines reutilizáveis.",
+        },
+      ];
+
+      function newChat() {
+        const chatArea = document.getElementById("chatArea");
+        chatArea.innerHTML = `
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div>
+                        <h1 class="welcome-title">Como posso ajudar hoje?</h1>
+                        <p class="welcome-subtitle">
+                            Sou o teu assistente de aprendizagem personalizado. Posso recomendar cursos, criar quizzes, agendar lives e acompanhar o teu progresso.
+                        </p>
+                    </div>
+                    
+                    <div class="example-prompts">
+                        <div class="example-prompt" onclick="quickSend('Preciso de ajuda para escolher um curso de programação')">
+                            <div class="example-prompt-title">Recomendações personalizadas</div>
+                            <div class="example-prompt-text">Preciso de ajuda para escolher um curso adequado</div>
+                        </div>
+                        
+                        <div class="example-prompt" onclick="quickSend('Cria um quiz sobre JavaScript')">
+                            <div class="example-prompt-title">Quiz interativo</div>
+                            <div class="example-prompt-text">Cria um quiz sobre JavaScript</div>
+                        </div>
+                        
+                        <div class="example-prompt" onclick="quickSend('Próximas lives sobre design')">
+                            <div class="example-prompt-title">Eventos e lives</div>
+                            <div class="example-prompt-text">Próximas lives sobre design</div>
+                        </div>
+                        
+                        <div class="example-prompt" onclick="quickSend('Resume algoritmos de ordenação')">
+                            <div class="example-prompt-title">Resumos inteligentes</div>
+                            <div class="example-prompt-text">Resume algoritmos de ordenação</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="message-avatar assistant-avatar">AI</div>
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+        chatState.isWelcomeVisible = true;
+      }
+
+      function quickSend(message) {
+        hideWelcome();
+        addMessage(message, "user");
+        showTypingIndicator();
+
+        setTimeout(() => {
+          const response = generateResponse(message);
+          hideTypingIndicator();
+          addMessage(response, "assistant");
+        }, 1500);
+      }
+
+      function sendMessage() {
+        const input = document.getElementById("messageInput");
+        const message = input.value.trim();
+
+        if (!message) return;
+
+        hideWelcome();
+        addMessage(message, "user");
+        input.value = "";
+        updateSendButton();
+
+        showTypingIndicator();
+
+        setTimeout(() => {
+          const response = generateResponse(message);
+          hideTypingIndicator();
+          addMessage(response, "assistant");
+        }, 1500);
+      }
+
+      function hideWelcome() {
+        const welcomeScreen = document.getElementById("welcomeScreen");
+        if (welcomeScreen && chatState.isWelcomeVisible) {
+          welcomeScreen.style.display = "none";
+          chatState.isWelcomeVisible = false;
+        }
+      }
+
+      function addMessage(content, sender) {
+        const chatArea = document.getElementById("chatArea");
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `message ${sender}`;
+
+        if (sender === "user") {
+          messageDiv.innerHTML = `
+                    <div class="message-content">${content}</div>
+                    <div class="message-avatar user-avatar">Tu</div>
+                `;
+        } else {
+          messageDiv.innerHTML = `
+                    <div class="message-avatar assistant-avatar">AI</div>
+                    <div class="message-content">${content}</div>
+                `;
+        }
+
+        chatArea.appendChild(messageDiv);
+        chatArea.scrollTop = chatArea.scrollHeight;
+      }
+
+      function generateResponse(message) {
+        const msg = message.toLowerCase();
+
+        if (msg.includes("recomend") || msg.includes("curso")) {
+          return `
+                    <strong>📚 Recomendações personalizadas:</strong><br><br>
+                    
+                    <div class="feature-card" onclick="selectCourse(0)">
+                        <strong>JavaScript Avançado</strong><br>
+                        <small>⏱️ 4h 30min • ⭐ 4.8 • 📊 Avançado</small><br>
+                        <em style="color: #58a6ff;">Perfeito para o teu nível atual</em>
+                    </div>
+                    
+                    <div class="feature-card" onclick="selectCourse(1)">
+                        <strong>React Fundamentals</strong><br>
+                        <small>⏱️ 3h 15min • ⭐ 4.9 • 📊 Intermédio</small><br>
+                        <em style="color: #3fb950;">Sequência natural dos estudos</em>
+                    </div>
+                    
+                    <div class="feature-card" onclick="selectCourse(2)">
+                        <strong>Design Systems</strong><br>
+                        <small>⏱️ 2h 45min • ⭐ 4.7 • 📊 Intermédio</small><br>
+                        <em style="color: #d2a8ff;">Combina design com desenvolvimento</em>
+                    </div>
+                `;
+        }
+
+        if (msg.includes("quiz") || msg.includes("teste")) {
+          const quiz = quizzes[Math.floor(Math.random() * quizzes.length)];
+          chatState.currentQuiz = quiz;
+
+          return `
+                    <strong>🧠 Quiz interativo:</strong><br><br>
+                    
+                    <div style="background: rgba(31, 111, 235, 0.1); padding: 20px; border-radius: 12px;">
+                        <strong>${quiz.question}</strong><br><br>
+                        
+                        <div class="quiz-option" onclick="answerQuiz(0)">
+                            <strong>A.</strong> ${quiz.options[0]}
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(1)">
+                            <strong>B.</strong> ${quiz.options[1]}
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(2)">
+                            <strong>C.</strong> ${quiz.options[2]}
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(3)">
+                            <strong>D.</strong> ${quiz.options[3]}
+                        </div>
+                    </div>
+                `;
+        }
+
+        if (msg.includes("progresso")) {
+          return `
+                    <strong>📊 Relatório de Progresso</strong><br><br>
+                    
+                    <div style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); color: white; padding: 20px; border-radius: 12px; margin: 16px 0;">
+                        <div style="font-size: 24px; font-weight: bold;">68%</div>
+                        <div>Progresso geral</div>
+                    </div>
+                    
+                    <strong>📈 Estatísticas:</strong><br>
+                    • Tempo de estudo: 45 minutos/dia<br>
+                    • Cursos ativos: 3<br>
+                    • Nível atual: Intermédio<br>
+                    • Quizzes completados: 12<br><br>
+                    
+                    Continua assim! Estás no bom caminho.
+                `;
+        }
+
+        if (msg.includes("live") || msg.includes("evento")) {
+          return `
+                    <strong>📅 Próximos eventos:</strong><br><br>
+                    
+                    <div class="feature-card" onclick="scheduleEvent(0)">
+                        🔴 <strong>Live: JavaScript ES2024</strong><br>
+                        <small>📅 Hoje às 18h00 • 👥 245 inscritos</small>
+                    </div>
+                    
+                    <div class="feature-card" onclick="scheduleEvent(1)">
+                        📺 <strong>Workshop: Design Systems</strong><br>
+                        <small>📅 Amanhã às 15h30 • 👥 89 inscritos</small>
+                    </div>
+                `;
+        }
+
+        if (msg.includes("resume") || msg.includes("resumo")) {
+          return `
+                    <strong>📝 Resumo - Algoritmos de Ordenação:</strong><br><br>
+                    
+                    <div style="background: rgba(22, 27, 34, 0.8); padding: 20px; border-radius: 12px;">
+                        <strong>Conceitos principais:</strong><br>
+                        • <strong>Bubble Sort:</strong> O(n²) - Simples mas ineficiente<br>
+                        • <strong>Quick Sort:</strong> O(n log n) - Divide e conquista<br>
+                        • <strong>Merge Sort:</strong> O(n log n) - Estável<br><br>
+                        
+                        <strong>⏱️ Duração:</strong> 45 minutos<br>
+                        <strong>📊 Complexidade:</strong> Intermédio<br>
+                        <strong>✅ Progresso:</strong> 100% concluído
+                    </div>
+                `;
+        }
+
+        return `Entendo que procuras informação sobre "${message}". Como posso ajudar-te especificamente? Posso criar recomendações, quizzes, mostrar progresso ou agendar eventos.`;
+      }
+
+      function answerQuiz(selectedIndex) {
+        const quiz = chatState.currentQuiz;
+        if (!quiz) return;
+
+        const isCorrect = selectedIndex === quiz.correct;
+        const color = isCorrect ? "#3fb950" : "#f85149";
+        const bg = isCorrect
+          ? "rgba(63, 185, 80, 0.1)"
+          : "rgba(248, 81, 73, 0.1)";
+        const icon = isCorrect ? "✅" : "❌";
+
+        const response = `
+                <div style="background: ${bg}; padding: 20px; border-radius: 12px; border-left: 4px solid ${color};">
+                    ${icon} <strong>${
+          isCorrect ? "Correto!" : "Incorreto"
+        }</strong><br><br>
+                    ${
+                      !isCorrect
+                        ? "<strong>Resposta correta:</strong> " +
+                          quiz.options[quiz.correct] +
+                          "<br><br>"
+                        : ""
+                    }
+                    <strong>Explicação:</strong><br>
+                    ${quiz.explanation}<br><br>
+                    <em>${
+                      isCorrect
+                        ? "Parabéns! Continua assim! 🎉"
+                        : "Não desanimes, a prática leva à perfeição! 💪"
+                    }</em>
+                </div>
+            `;
+
+        setTimeout(() => {
+          addMessage(response, "assistant");
+          chatState.currentQuiz = null;
+        }, 500);
+      }
+
+      function selectCourse(index) {
+        const courses = [
+          "JavaScript Avançado",
+          "React Fundamentals",
+          "Design Systems",
+        ];
+        const response = `
+                <strong>✅ Curso "${courses[index]}" selecionado!</strong><br><br>
+                Curso adicionado à tua lista de estudos. Recomendo estudar 30-45min por sessão. Quer que configure lembretes?
+            `;
+
+        setTimeout(() => {
+          addMessage(response, "assistant");
+        }, 500);
+      }
+
+      function scheduleEvent(index) {
+        const events = ["Live: JavaScript ES2024", "Workshop: Design Systems"];
+        const response = `
+                <strong>📅 "${events[index]}" agendado!</strong><br><br>
+                Receberás uma notificação 30 minutos antes do evento começar.
+            `;
+
+        setTimeout(() => {
+          addMessage(response, "assistant");
+        }, 500);
+      }
+
+      function showTypingIndicator() {
+        document.getElementById("typingIndicator").style.display = "flex";
+        document.getElementById("chatArea").scrollTop =
+          document.getElementById("chatArea").scrollHeight;
+      }
+
+      function hideTypingIndicator() {
+        document.getElementById("typingIndicator").style.display = "none";
+      }
+
+      function updateSendButton() {
+        const input = document.getElementById("messageInput");
+        const btn = document.getElementById("sendBtn");
+        btn.disabled = !input.value.trim();
+      }
+
+      // Event listeners
+      document
+        .getElementById("messageInput")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            sendMessage();
+          }
+        });
+
+      document
+        .getElementById("messageInput")
+        .addEventListener("input", updateSendButton);
+
+      // Initialize
+      document.getElementById("sendBtn").disabled = true;
+    </script>
+  </body>
+</html>

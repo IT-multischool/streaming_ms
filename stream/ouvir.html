@@ -1,0 +1,3749 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multischool Podcast - Plataforma Avançada</title>
+    <style>
+      :root {
+        --primary: #6366f1;
+        --secondary: #8b5cf6;
+        --accent: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --dark: #0f172a;
+        --card: #1e293b;
+        --surface: #334155;
+        --text: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --border: #475569;
+        --glass: rgba(255, 255, 255, 0.05);
+        --glass-strong: rgba(255, 255, 255, 0.1);
+        --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        --shadow-strong: 0 35px 60px -12px rgba(0, 0, 0, 0.4);
+        --glow: 0 0 30px rgba(99, 102, 241, 0.3);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--dark) 0%,
+          #1a202c 30%,
+          #0f1419 70%,
+          var(--dark) 100%
+        );
+        color: var(--text);
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Enhanced Animated Background */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at 20% 50%,
+            rgba(99, 102, 241, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(139, 92, 246, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 80%,
+            rgba(16, 185, 129, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 70% 60%,
+            rgba(245, 158, 11, 0.1) 0%,
+            transparent 40%
+          );
+        animation: backgroundFloat 25s ease-in-out infinite;
+        z-index: -2;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+          repeat;
+        opacity: 0.3;
+        animation: patternShift 30s linear infinite;
+        z-index: -1;
+      }
+
+      @keyframes backgroundFloat {
+        0%,
+        100% {
+          transform: scale(1) rotate(0deg);
+          filter: hue-rotate(0deg);
+        }
+        25% {
+          transform: scale(1.1) rotate(90deg);
+          filter: hue-rotate(90deg);
+        }
+        50% {
+          transform: scale(0.9) rotate(180deg);
+          filter: hue-rotate(180deg);
+        }
+        75% {
+          transform: scale(1.05) rotate(270deg);
+          filter: hue-rotate(270deg);
+        }
+      }
+
+      @keyframes patternShift {
+        0% {
+          transform: translateX(0) translateY(0);
+        }
+        100% {
+          transform: translateX(60px) translateY(60px);
+        }
+      }
+
+      .container {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 24px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Enhanced Header */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        backdrop-filter: blur(25px);
+        background: var(--glass-strong);
+        padding: 24px 32px;
+        border-radius: 24px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-strong);
+        position: relative;
+        overflow: hidden;
+      }
+
+      header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--primary),
+          var(--secondary),
+          var(--accent),
+          var(--warning)
+        );
+        background-size: 400% 100%;
+        animation: gradientShift 3s ease-in-out infinite;
+      }
+
+      @keyframes gradientShift {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .logo h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--secondary),
+          var(--accent)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+      }
+
+      .logo-icon {
+        width: 56px;
+        height: 56px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        animation: logoFloat 3s ease-in-out infinite;
+        box-shadow: var(--glow);
+      }
+
+      @keyframes logoFloat {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-8px) rotate(5deg);
+        }
+      }
+
+      .header-controls {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .btn {
+        padding: 14px 24px;
+        border: none;
+        border-radius: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        font-size: 14px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.6s;
+      }
+
+      .btn:hover::before {
+        left: 100%;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 16px 48px rgba(99, 102, 241, 0.6);
+      }
+
+      .btn-glass {
+        background: var(--glass-strong);
+        color: var(--text);
+        border: 1px solid var(--border);
+        backdrop-filter: blur(20px);
+      }
+
+      .btn-glass:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+        border-color: var(--primary);
+      }
+
+      /* Enhanced Main Grid */
+      .main-grid {
+        display: grid;
+        grid-template-columns: 1fr 420px;
+        gap: 32px;
+        margin-bottom: 48px;
+      }
+
+      /* Enhanced Player Card */
+      .player-card {
+        background: var(--glass);
+        backdrop-filter: blur(25px);
+        border: 1px solid var(--border);
+        border-radius: 32px;
+        padding: 32px;
+        box-shadow: var(--shadow-strong);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .player-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--primary),
+          var(--secondary),
+          var(--accent)
+        );
+        background-size: 300% 100%;
+        animation: gradientShift 2s ease-in-out infinite;
+      }
+
+      .episode-cover {
+        width: 100%;
+        height: 240px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--secondary),
+          var(--accent)
+        );
+        border-radius: 20px;
+        margin-bottom: 24px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 5rem;
+        cursor: pointer;
+        transition: all 0.4s ease;
+      }
+
+      .episode-cover::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transform: translateX(-100%);
+        transition: transform 0.8s;
+      }
+
+      .episode-cover:hover::before {
+        transform: translateX(100%);
+      }
+
+      .episode-cover:hover {
+        transform: scale(1.02);
+        box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+      }
+
+      .episode-info h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: var(--text);
+        line-height: 1.3;
+      }
+
+      .episode-meta {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 24px;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        flex-wrap: wrap;
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        background: var(--surface);
+        border-radius: 20px;
+        font-size: 0.85rem;
+        border: 1px solid var(--border);
+      }
+
+      .controls {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+      }
+
+      .control-btn {
+        width: 52px;
+        height: 52px;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-size: 1.3rem;
+        position: relative;
+      }
+
+      .play-btn {
+        width: 72px;
+        height: 72px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        font-size: 2rem;
+        box-shadow: 0 12px 32px rgba(99, 102, 241, 0.4);
+      }
+
+      .play-btn:hover {
+        transform: scale(1.15);
+        box-shadow: 0 20px 48px rgba(99, 102, 241, 0.6);
+      }
+
+      .secondary-btn {
+        background: var(--surface);
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+
+      .secondary-btn:hover {
+        background: var(--border);
+        transform: scale(1.1);
+        border-color: var(--primary);
+      }
+
+      .progress-container {
+        flex: 1;
+        height: 12px;
+        background: var(--surface);
+        border-radius: 6px;
+        overflow: hidden;
+        cursor: pointer;
+        position: relative;
+        border: 1px solid var(--border);
+      }
+
+      .progress {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        transition: width 0.1s ease;
+        position: relative;
+      }
+
+      .progress::after {
+        content: "";
+        position: absolute;
+        right: -8px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        border: 2px solid var(--primary);
+      }
+
+      .time-display {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 8px;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+      }
+
+      .speed-controls {
+        display: flex;
+        gap: 6px;
+        background: var(--surface);
+        padding: 4px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+      }
+
+      .speed-btn {
+        padding: 8px 12px;
+        background: transparent;
+        border: none;
+        border-radius: 8px;
+        color: var(--text);
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .speed-btn.active,
+      .speed-btn:hover {
+        background: var(--primary);
+        color: white;
+        transform: scale(1.05);
+      }
+
+      /* Enhanced AI Sidebar */
+      .ai-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .ai-card {
+        background: var(--glass);
+        backdrop-filter: blur(25px);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: var(--shadow-strong);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .ai-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent), #059669);
+      }
+
+      .ai-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 40px 80px -16px rgba(0, 0, 0, 0.4);
+      }
+
+      .ai-card h3 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text);
+      }
+
+      .ai-icon {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, var(--accent), #059669);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        animation: iconGlow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes iconGlow {
+        from {
+          box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+        }
+        to {
+          box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+        }
+      }
+
+      /* Enhanced Chat */
+      .chat-messages {
+        max-height: 280px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+        padding-right: 12px;
+      }
+
+      .chat-messages::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .chat-messages::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 3px;
+      }
+
+      .chat-messages::-webkit-scrollbar-thumb:hover {
+        background: var(--primary);
+      }
+
+      .message {
+        margin-bottom: 16px;
+        padding: 16px 20px;
+        border-radius: 16px;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        position: relative;
+        animation: messageSlide 0.4s ease-out;
+      }
+
+      @keyframes messageSlide {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .message.user {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        margin-left: 24px;
+        border-bottom-right-radius: 6px;
+      }
+
+      .message.ai {
+        background: var(--surface);
+        margin-right: 24px;
+        border: 1px solid var(--border);
+        border-bottom-left-radius: 6px;
+      }
+
+      .message-time {
+        font-size: 0.75rem;
+        opacity: 0.7;
+        margin-top: 4px;
+      }
+
+      .typing-indicator {
+        display: none;
+        align-items: center;
+        gap: 6px;
+        padding: 16px 20px;
+        background: var(--surface);
+        border-radius: 16px;
+        margin-right: 24px;
+        border: 1px solid var(--border);
+      }
+
+      .typing-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--accent);
+        border-radius: 50%;
+        animation: typing 1.6s infinite;
+      }
+
+      .typing-dot:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+      .typing-dot:nth-child(3) {
+        animation-delay: 0.6s;
+      }
+
+      @keyframes typing {
+        0%,
+        60%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.7;
+        }
+        30% {
+          transform: translateY(-12px);
+          opacity: 1;
+        }
+      }
+
+      .chat-input {
+        display: flex;
+        gap: 12px;
+        align-items: flex-end;
+      }
+
+      .chat-input input {
+        flex: 1;
+        padding: 16px 20px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        color: var(--text);
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        resize: none;
+      }
+
+      .chat-input input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+      }
+
+      .chat-input input::placeholder {
+        color: var(--text-secondary);
+      }
+
+      .chat-send-btn {
+        padding: 16px 20px;
+        background: linear-gradient(135deg, var(--accent), #059669);
+        border: none;
+        border-radius: 16px;
+        color: white;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        min-width: 56px;
+      }
+
+      .chat-send-btn:hover {
+        background: linear-gradient(135deg, #059669, var(--accent));
+        transform: scale(1.05);
+        box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+      }
+
+      .chat-send-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Voice Control */
+      .voice-control {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .voice-btn {
+        padding: 8px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--text);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .voice-btn:hover {
+        background: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .voice-btn.recording {
+        background: var(--danger);
+        border-color: var(--danger);
+        animation: recordingPulse 1s infinite;
+      }
+
+      @keyframes recordingPulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+
+      /* Enhanced Features Grid */
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        gap: 24px;
+        margin-bottom: 48px;
+      }
+
+      .feature-card {
+        background: var(--glass);
+        backdrop-filter: blur(25px);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 28px;
+        box-shadow: var(--shadow-strong);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          var(--primary),
+          var(--secondary),
+          var(--accent)
+        );
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
+      }
+
+      .feature-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .feature-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 40px 80px -16px rgba(0, 0, 0, 0.5);
+      }
+
+      .feature-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .feature-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        position: relative;
+      }
+
+      .chapters-icon {
+        background: linear-gradient(135deg, var(--warning), #d97706);
+        box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+      }
+      .playlist-icon {
+        background: linear-gradient(135deg, #ec4899, #be185d);
+        box-shadow: 0 8px 24px rgba(236, 72, 153, 0.3);
+      }
+      .transcript-icon {
+        background: linear-gradient(135deg, #06b6d4, #0891b2);
+        box-shadow: 0 8px 24px rgba(6, 182, 212, 0.3);
+      }
+
+      .chapter-btn,
+      .playlist-item {
+        width: 100%;
+        padding: 12px 16px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        color: var(--text);
+        cursor: pointer;
+        margin-bottom: 8px;
+        transition: all 0.3s ease;
+        text-align: left;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .chapter-btn:hover,
+      .playlist-item:hover {
+        background: var(--border);
+        border-color: var(--primary);
+        transform: translateX(4px);
+      }
+
+      .chapter-btn.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: white;
+      }
+
+      /* Enhanced Episodes Section */
+      .episodes-section h2 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 32px;
+        background: linear-gradient(135deg, var(--text), var(--text-secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-align: center;
+      }
+
+      .episodes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+        gap: 28px;
+      }
+
+      .episode-card {
+        background: var(--glass);
+        backdrop-filter: blur(25px);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        position: relative;
+      }
+
+      .episode-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 20px;
+        padding: 1px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--secondary),
+          var(--accent)
+        );
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: xor;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .episode-card:hover::before {
+        opacity: 1;
+      }
+
+      .episode-card:hover {
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 32px 64px -16px rgba(0, 0, 0, 0.6);
+      }
+
+      .episode-thumbnail {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .episode-thumbnail::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transform: translateX(-100%);
+        transition: transform 0.8s;
+      }
+
+      .episode-card:hover .episode-thumbnail::before {
+        transform: translateX(100%);
+      }
+
+      .play-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .episode-card:hover .play-overlay {
+        opacity: 1;
+      }
+
+      .play-overlay button {
+        width: 64px;
+        height: 64px;
+        border: none;
+        border-radius: 50%;
+        background: white;
+        color: var(--primary);
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .play-overlay button:hover {
+        transform: scale(1.1);
+      }
+
+      .episode-content {
+        padding: 24px;
+      }
+
+      .episode-content h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text);
+        line-height: 1.3;
+      }
+
+      .episode-content p {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 16px;
+      }
+
+      .episode-stats {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 16px;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+      }
+
+      .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .episode-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .action-btn {
+        padding: 10px 16px;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .action-btn.primary {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+      }
+
+      .action-btn.secondary {
+        background: var(--surface);
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+
+      .action-btn:hover {
+        transform: translateY(-2px) scale(1.05);
+      }
+
+      .action-btn.primary:hover {
+        box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+      }
+
+      .action-btn.secondary:hover {
+        background: var(--border);
+        border-color: var(--primary);
+      }
+
+      /* Enhanced Playlist Manager */
+      .playlist-manager {
+        background: var(--glass);
+        backdrop-filter: blur(25px);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 28px;
+        margin-bottom: 32px;
+        box-shadow: var(--shadow-strong);
+      }
+
+      .playlist-tabs {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 24px;
+        background: var(--surface);
+        padding: 4px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+      }
+
+      .playlist-tab {
+        padding: 12px 20px;
+        background: transparent;
+        border: none;
+        border-radius: 8px;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .playlist-tab.active {
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+      }
+
+      .playlist-content {
+        min-height: 200px;
+      }
+
+      .playlist-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 16px;
+      }
+
+      .playlist-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .playlist-card:hover {
+        background: var(--border);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      }
+
+      .playlist-card h5 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text);
+      }
+
+      .playlist-card p {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-bottom: 12px;
+      }
+
+      .playlist-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+      }
+
+      /* Stats Dashboard */
+      .stats-dashboard {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+
+      .stat-card {
+        background: var(--glass);
+        backdrop-filter: blur(25px);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-strong);
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--primary);
+        margin-bottom: 4px;
+      }
+
+      .stat-label {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+      }
+
+      /* Search & Filter */
+      .search-section {
+        margin-bottom: 32px;
+      }
+
+      .search-bar {
+        position: relative;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 16px 20px 16px 52px;
+        background: var(--glass);
+        backdrop-filter: blur(25px);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        color: var(--text);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 24px rgba(99, 102, 241, 0.3);
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-secondary);
+        font-size: 1.2rem;
+      }
+
+      .filters {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 16px;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        padding: 8px 16px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        color: var(--text);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.85rem;
+      }
+
+      .filter-btn.active,
+      .filter-btn:hover {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: white;
+        transform: scale(1.05);
+      }
+
+      /* Notification System */
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--glass);
+        backdrop-filter: blur(25px);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px 20px;
+        color: var(--text);
+        box-shadow: var(--shadow-strong);
+        transform: translateX(400px);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1000;
+        max-width: 350px;
+      }
+
+      .notification.show {
+        transform: translateX(0);
+      }
+
+      .notification.success {
+        border-left: 4px solid var(--accent);
+      }
+
+      .notification.error {
+        border-left: 4px solid var(--danger);
+      }
+
+      .notification.info {
+        border-left: 4px solid var(--primary);
+      }
+
+      /* Loading States */
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--border);
+        border-radius: 50%;
+        border-top-color: var(--primary);
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .skeleton {
+        background: linear-gradient(
+          90deg,
+          var(--surface) 25%,
+          var(--border) 50%,
+          var(--surface) 75%
+        );
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+        border-radius: 8px;
+      }
+
+      @keyframes loading {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+
+      /* Responsive Enhancements */
+      @media (max-width: 1200px) {
+        .main-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .ai-sidebar {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 24px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 16px;
+        }
+
+        header {
+          flex-direction: column;
+          gap: 16px;
+          text-align: center;
+          padding: 20px;
+        }
+
+        .logo h1 {
+          font-size: 2.2rem;
+        }
+
+        .main-grid,
+        .ai-sidebar,
+        .stats-dashboard {
+          grid-template-columns: 1fr;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .episodes-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .controls {
+          justify-content: center;
+        }
+
+        .playlist-tabs {
+          overflow-x: auto;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+
+        .playlist-tabs::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .episode-cover {
+          height: 200px;
+        }
+
+        .play-btn {
+          width: 60px;
+          height: 60px;
+          font-size: 1.5rem;
+        }
+
+        .control-btn {
+          width: 44px;
+          height: 44px;
+        }
+
+        .logo h1 {
+          font-size: 1.8rem;
+        }
+
+        .logo-icon {
+          width: 48px;
+          height: 48px;
+          font-size: 1.5rem;
+        }
+      }
+
+      /* Accessibility */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+
+      /* High contrast mode */
+      @media (prefers-contrast: high) {
+        :root {
+          --border: #ffffff;
+          --text-secondary: #ffffff;
+        }
+      }
+
+      /* Dark theme enhancements */
+      .theme-light {
+        --dark: #ffffff;
+        --card: #f8fafc;
+        --surface: #e2e8f0;
+        --text: #1e293b;
+        --text-secondary: #64748b;
+        --border: #cbd5e1;
+        --glass: rgba(0, 0, 0, 0.05);
+        --glass-strong: rgba(0, 0, 0, 0.1);
+      }
+
+      /* Animations */
+      .fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .slide-up {
+        animation: slideUp 0.8s ease-out forwards;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .scale-in {
+        animation: scaleIn 0.6s ease-out forwards;
+      }
+
+      @keyframes scaleIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Enhanced Header -->
+      <header class="fade-in">
+        <a href="index.html">
+          <div class="logo">
+            <div class="logo-icon">🎧</div>
+            <h1>Multischool</h1>
+          </div>
+        </a>
+        <div class="header-controls">
+          <button class="btn btn-glass" id="theme-toggle">
+            <span id="theme-icon">🌙</span>
+          </button>
+          <button class="btn btn-glass" id="search-toggle">🔍 Pesquisar</button>
+          <button class="btn btn-glass">⚙️ Configurações</button>
+          <button class="btn btn-primary" id="subscribe-btn">
+            ✨ Seguir Podcast
+          </button>
+        </div>
+      </header>
+
+      <!-- Stats Dashboard -->
+      <div class="stats-dashboard scale-in">
+        <div class="stat-card">
+          <div class="stat-value" id="total-episodes">24</div>
+          <div class="stat-label">Episódios</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="total-listeners">12.5K</div>
+          <div class="stat-label">Ouvintes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="total-hours">18h</div>
+          <div class="stat-label">Horas de Conteúdo</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="avg-rating">4.8</div>
+          <div class="stat-label">Avaliação Média</div>
+        </div>
+      </div>
+
+      <!-- Search Section -->
+      <div class="search-section" id="search-section" style="display: none">
+        <div class="search-bar">
+          <div class="search-icon">🔍</div>
+          <input
+            type="text"
+            class="search-input"
+            id="search-input"
+            placeholder="Pesquisar episódios, tópicos, ou palavras-chave..."
+          />
+        </div>
+        <div class="filters">
+          <button class="filter-btn active" data-filter="all">Todos</button>
+          <button class="filter-btn" data-filter="recent">Recentes</button>
+          <button class="filter-btn" data-filter="popular">Populares</button>
+          <button class="filter-btn" data-filter="technology">
+            Tecnologia
+          </button>
+          <button class="filter-btn" data-filter="education">Educação</button>
+          <button class="filter-btn" data-filter="ai">IA</button>
+        </div>
+      </div>
+
+      <!-- Main Grid -->
+      <div class="main-grid">
+        <!-- Enhanced Player Card -->
+        <div class="player-card slide-up">
+          <div class="episode-cover" id="episode-cover">🎵</div>
+
+          <div class="episode-info">
+            <h2 id="current-episode-title">
+              Episódio 1 - Introdução ao Futuro da Educação
+            </h2>
+            <div
+              class="host-info"
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin: 16px 0 20px 0;
+                padding: 16px;
+                background: var(--surface);
+                border-radius: 16px;
+                border: 1px solid var(--border);
+              "
+            >
+              <div style="display: flex; align-items: center; gap: 12px">
+                <div
+                  class="host-avatar"
+                  style="
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 50%;
+                    background: linear-gradient(
+                      135deg,
+                      var(--primary),
+                      var(--secondary)
+                    );
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 1.5rem;
+                    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+                  "
+                >
+                  👨‍🏫
+                </div>
+                <div>
+                  <a href="criador.html"
+                    ><div
+                      style="
+                        font-weight: 600;
+                        font-size: 1rem;
+                        color: var(--text);
+                      "
+                      id="host-name"
+                    >
+                      Prof. João Silva
+                    </div>
+                    <div
+                      style="font-size: 0.85rem; color: var(--text-secondary)"
+                      id="host-title"
+                    >
+                      Especialista em Educação Digital
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <button
+                class="btn btn-primary"
+                id="follow-host"
+                style="padding: 8px 16px; font-size: 0.85rem"
+              >
+                ➕ Seguir Host
+              </button>
+            </div>
+
+            <div class="episode-meta">
+              <div class="meta-item">
+                <span>👥</span>
+                <span id="current-listeners">1.2k ouvintes</span>
+              </div>
+
+              <div class="meta-item">
+                <span>⏱️</span>
+                <span id="current-duration">45:30</span>
+              </div>
+              <div class="meta-item">
+                <span>📅</span>
+                <span id="current-date">Hoje</span>
+              </div>
+              <div class="meta-item">
+                <span>⭐</span>
+                <span id="current-rating">4.9</span>
+              </div>
+            </div>
+          </div>
+
+          <audio id="audio-player" preload="none">
+            <source src="" type="audio/mpeg" />
+          </audio>
+
+          <div class="controls">
+            <button
+              class="control-btn secondary-btn"
+              id="shuffle-btn"
+              title="Aleatório"
+            >
+              🔀
+            </button>
+            <button
+              class="control-btn secondary-btn"
+              id="back-btn"
+              title="Anterior"
+            >
+              ⏪
+            </button>
+            <button
+              class="control-btn play-btn"
+              id="play-btn"
+              title="Reproduzir/Pausar"
+            >
+              ▶️
+            </button>
+            <button
+              class="control-btn secondary-btn"
+              id="forward-btn"
+              title="Próximo"
+            >
+              ⏩
+            </button>
+            <button
+              class="control-btn secondary-btn"
+              id="repeat-btn"
+              title="Repetir"
+            >
+              🔁
+            </button>
+
+            <div class="progress-container" id="progress-container">
+              <div class="progress" id="progress-bar" style="width: 0%"></div>
+            </div>
+
+            <div class="speed-controls">
+              <button class="speed-btn" data-speed="0.5">0.5x</button>
+              <button class="speed-btn" data-speed="0.75">0.75x</button>
+              <button class="speed-btn active" data-speed="1">1x</button>
+              <button class="speed-btn" data-speed="1.25">1.25x</button>
+              <button class="speed-btn" data-speed="1.5">1.5x</button>
+              <button class="speed-btn" data-speed="2">2x</button>
+            </div>
+          </div>
+
+          <div class="time-display">
+            <span id="current-time">00:00</span>
+            <span id="total-time">45:30</span>
+          </div>
+
+          <!-- Episode Details Section -->
+          <div
+            class="episode-details"
+            style="
+              margin-top: 24px;
+              padding: 20px;
+              background: var(--surface);
+              border-radius: 16px;
+              border: 1px solid var(--border);
+            "
+          >
+            <div class="episode-description">
+              <h4
+                style="
+                  font-size: 1.1rem;
+                  font-weight: 600;
+                  margin-bottom: 12px;
+                  color: var(--text);
+                "
+              >
+                📋 Sobre este episódio
+              </h4>
+              <p
+                id="current-description"
+                style="
+                  color: var(--text-secondary);
+                  line-height: 1.6;
+                  margin-bottom: 16px;
+                "
+              >
+                Uma jornada profunda pelos conceitos fundamentais que moldarão a
+                educação nas próximas décadas, explorando tecnologias emergentes
+                e metodologias inovadoras que já estão transformando a forma
+                como aprendemos e ensinamos.
+              </p>
+
+              <div
+                class="episode-tags"
+                style="
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 8px;
+                  margin-bottom: 16px;
+                "
+              >
+                <span
+                  class="tag"
+                  style="
+                    background: var(--primary);
+                    color: white;
+                    padding: 4px 12px;
+                    border-radius: 12px;
+                    font-size: 0.8rem;
+                    font-weight: 500;
+                  "
+                  >#Educação</span
+                >
+                <span
+                  class="tag"
+                  style="
+                    background: var(--secondary);
+                    color: white;
+                    padding: 4px 12px;
+                    border-radius: 12px;
+                    font-size: 0.8rem;
+                    font-weight: 500;
+                  "
+                  >#Tecnologia</span
+                >
+                <span
+                  class="tag"
+                  style="
+                    background: var(--accent);
+                    color: white;
+                    padding: 4px 12px;
+                    border-radius: 12px;
+                    font-size: 0.8rem;
+                    font-weight: 500;
+                  "
+                  >#Futuro</span
+                >
+                <span
+                  class="tag"
+                  style="
+                    background: var(--warning);
+                    color: white;
+                    padding: 4px 12px;
+                    border-radius: 12px;
+                    font-size: 0.8rem;
+                    font-weight: 500;
+                  "
+                  >#IA</span
+                >
+              </div>
+
+              <div
+                class="episode-actions-extended"
+                style="display: flex; gap: 8px; flex-wrap: wrap"
+              >
+                <button
+                  class="action-btn secondary"
+                  onclick="platform.likeEpisode()"
+                  style="flex: 1"
+                >
+                  ❤️ Curtir (<span id="likes-count">324</span>)
+                </button>
+                <button
+                  class="action-btn secondary"
+                  onclick="platform.addToFavorites()"
+                  style="flex: 1"
+                >
+                  ⭐ Favoritar
+                </button>
+                <button
+                  class="action-btn secondary"
+                  onclick="platform.showComments()"
+                  style="flex: 1"
+                >
+                  💬 Comentários (89)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Enhanced AI Sidebar -->
+        <div class="ai-sidebar">
+          <!-- AI Chatbot -->
+          <div class="ai-card scale-in">
+            <h3>
+              <div class="ai-icon">🤖</div>
+              Assistente IA
+            </h3>
+            <div class="chat-messages" id="chat-messages">
+              <div class="message ai">
+                Olá! 👋 Eu sou o MultiBot, o teu assistente IA especializado em
+                podcasts. Posso ajudar com:
+                <br />• Resumos e análises dos episódios <br />• Busca por
+                tópicos específicos <br />• Recomendações personalizadas <br />•
+                Transcrições e timestamps <br /><br />O que você gostaria de
+                descobrir hoje?
+                <div class="message-time">Agora</div>
+              </div>
+            </div>
+            <div class="typing-indicator" id="typing-indicator">
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+            </div>
+            <div class="chat-input">
+              <input
+                type="text"
+                id="chat-input"
+                placeholder="Pergunte sobre qualquer episódio..."
+                maxlength="500"
+              />
+              <button class="chat-send-btn" id="chat-send" disabled>📤</button>
+            </div>
+            <div class="voice-control">
+              <button class="voice-btn" id="voice-btn" title="Comando por voz">
+                🎤
+              </button>
+              <span class="voice-status" id="voice-status"></span>
+            </div>
+          </div>
+
+          <!-- AI Summary -->
+          <div class="ai-card scale-in">
+            <h3>
+              <div class="ai-icon">📋</div>
+              Resumo Inteligente
+            </h3>
+            <div id="ai-summary">
+              <div style="margin-bottom: 16px">
+                <strong>🎯 Pontos Principais:</strong>
+                <ul style="margin: 8px 0 0 20px; line-height: 1.6">
+                  <li>Revolução digital na educação moderna</li>
+                  <li>Metodologias ativas e aprendizagem personalizada</li>
+                  <li>Tendências em tecnologia educacional para 2024</li>
+                  <li>Casos de sucesso em implementação de IA</li>
+                </ul>
+              </div>
+
+              <div style="margin-bottom: 16px">
+                <strong>💡 Insights Principais:</strong>
+                <p style="margin: 8px 0; font-size: 0.9rem">
+                  Este episódio estabelece as bases fundamentais para
+                  compreender como a tecnologia está reformulando o panorama
+                  educacional global.
+                </p>
+              </div>
+
+              <div>
+                <strong>📊 Estatísticas Mencionadas:</strong>
+                <ul
+                  style="
+                    margin: 8px 0 0 20px;
+                    line-height: 1.6;
+                    font-size: 0.85rem;
+                  "
+                >
+                  <li>85% das profissões de 2030 ainda não existem</li>
+                  <li>70% de melhoria na retenção com IA personalizada</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Recommendations -->
+          <div class="ai-card scale-in">
+            <h3>
+              <div class="ai-icon">⭐</div>
+              Recomendações IA
+            </h3>
+            <div id="ai-recommendations">
+              <p style="margin-bottom: 16px">
+                <strong>🎯 Baseado no seu perfil:</strong>
+              </p>
+
+              <div
+                class="recommendation-item"
+                style="
+                  margin-bottom: 12px;
+                  padding: 12px;
+                  background: var(--surface);
+                  border-radius: 8px;
+                  cursor: pointer;
+                "
+                data-episode="5"
+              >
+                <div style="font-weight: 600; margin-bottom: 4px">
+                  📚 Episódio 5 - Metodologias Ativas
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-secondary)">
+                  95% de compatibilidade
+                </div>
+              </div>
+
+              <div
+                class="recommendation-item"
+                style="
+                  margin-bottom: 12px;
+                  padding: 12px;
+                  background: var(--surface);
+                  border-radius: 8px;
+                  cursor: pointer;
+                "
+                data-episode="8"
+              >
+                <div style="font-weight: 600; margin-bottom: 4px">
+                  🔬 Episódio 8 - Ciência de Dados
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-secondary)">
+                  92% de compatibilidade
+                </div>
+              </div>
+
+              <div
+                class="recommendation-item"
+                style="
+                  margin-bottom: 16px;
+                  padding: 12px;
+                  background: var(--surface);
+                  border-radius: 8px;
+                  cursor: pointer;
+                "
+                data-episode="12"
+              >
+                <div style="font-weight: 600; margin-bottom: 4px">
+                  🎨 Episódio 12 - Design Thinking
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-secondary)">
+                  89% de compatibilidade
+                </div>
+              </div>
+
+              <button
+                class="btn btn-primary"
+                style="width: 100%; font-size: 0.85rem"
+                id="more-recommendations"
+              >
+                🔄 Mais Recomendações
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Playlist Manager -->
+      <div class="playlist-manager scale-in">
+        <h3 style="margin-bottom: 20px; font-size: 1.4rem; font-weight: 700">
+          🎵 Gerenciador de Playlists
+        </h3>
+
+        <div class="playlist-tabs">
+          <button class="playlist-tab active" data-tab="my-playlists">
+            Minhas Playlists
+          </button>
+          <button class="playlist-tab" data-tab="recommended">
+            Recomendadas
+          </button>
+          <button class="playlist-tab" data-tab="trending">Em Alta</button>
+          <button class="playlist-tab" data-tab="create">+ Criar Nova</button>
+        </div>
+
+        <div class="playlist-content">
+          <div id="my-playlists" class="playlist-grid">
+            <!-- Playlists serão geradas via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Enhanced Features Grid -->
+      <div class="features-grid">
+        <!-- Smart Chapters -->
+        <div class="feature-card scale-in">
+          <div class="feature-header">
+            <div class="feature-icon chapters-icon">📑</div>
+            <h3>Capítulos Inteligentes</h3>
+          </div>
+          <div id="smart-chapters">
+            <div class="chapters-list">
+              <!-- Chapters serão gerados dinamicamente -->
+            </div>
+            <button
+              class="btn btn-primary"
+              style="width: 100%; margin-top: 12px"
+              id="generate-chapters"
+            >
+              🤖 Gerar Capítulos com IA
+            </button>
+          </div>
+        </div>
+
+        <!-- Enhanced Transcript -->
+        <div class="feature-card scale-in">
+          <div class="feature-header">
+            <div class="feature-icon transcript-icon">📝</div>
+            <h3>Transcrição IA</h3>
+          </div>
+          <div
+            id="ai-transcript"
+            style="
+              max-height: 200px;
+              overflow-y: auto;
+              font-size: 0.85rem;
+              line-height: 1.5;
+            "
+          >
+            <!-- Transcript será gerado dinamicamente -->
+          </div>
+          <div style="margin-top: 12px; display: flex; gap: 8px">
+            <button
+              class="btn btn-primary"
+              style="flex: 1; font-size: 0.8rem"
+              id="search-transcript"
+            >
+              🔍 Buscar na Transcrição
+            </button>
+            <button
+              class="btn btn-glass"
+              style="flex: 1; font-size: 0.8rem"
+              id="download-transcript"
+            >
+              📥 Download
+            </button>
+          </div>
+        </div>
+
+        <!-- Analytics -->
+        <div class="feature-card scale-in">
+          <div class="feature-header">
+            <div
+              class="feature-icon"
+              style="background: linear-gradient(135deg, #8b5cf6, #7c3aed)"
+            >
+              📊
+            </div>
+            <h3>Analytics IA</h3>
+          </div>
+          <div id="analytics-content">
+            <div style="margin-bottom: 16px">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  margin-bottom: 8px;
+                "
+              >
+                <span style="font-size: 0.9rem">Engajamento</span>
+                <span
+                  style="
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    color: var(--accent);
+                  "
+                  >94%</span
+                >
+              </div>
+              <div
+                style="
+                  background: var(--surface);
+                  border-radius: 4px;
+                  height: 6px;
+                "
+              >
+                <div
+                  style="
+                    background: var(--accent);
+                    height: 100%;
+                    border-radius: 4px;
+                    width: 94%;
+                  "
+                ></div>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 16px">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  margin-bottom: 8px;
+                "
+              >
+                <span style="font-size: 0.9rem">Retenção</span>
+                <span
+                  style="
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    color: var(--primary);
+                  "
+                  >87%</span
+                >
+              </div>
+              <div
+                style="
+                  background: var(--surface);
+                  border-radius: 4px;
+                  height: 6px;
+                "
+              >
+                <div
+                  style="
+                    background: var(--primary);
+                    height: 100%;
+                    border-radius: 4px;
+                    width: 87%;
+                  "
+                ></div>
+              </div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+                margin-top: 16px;
+              "
+            >
+              <div
+                style="
+                  text-align: center;
+                  padding: 12px;
+                  background: var(--surface);
+                  border-radius: 8px;
+                "
+              >
+                <div
+                  style="
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                    color: var(--warning);
+                  "
+                >
+                  4.2k
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary)">
+                  Reproduções
+                </div>
+              </div>
+              <div
+                style="
+                  text-align: center;
+                  padding: 12px;
+                  background: var(--surface);
+                  border-radius: 8px;
+                "
+              >
+                <div
+                  style="
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                    color: var(--accent);
+                  "
+                >
+                  38min
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary)">
+                  Tempo Médio
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Episodes Section -->
+      <div class="episodes-section">
+        <h2>🎙️ Biblioteca de Episódios</h2>
+        <div class="episodes-grid" id="episodes-grid">
+          <!-- Episodes serão gerados via JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div class="notification" id="notification">
+      <div class="notification-content"></div>
+    </div>
+
+    <script>
+      class MultischoolPodcastPlatform {
+        constructor() {
+          this.currentEpisode = null;
+          this.isPlaying = false;
+          this.currentTime = 0;
+          this.duration = 2730; // 45:30 em segundos
+          this.playbackRate = 1;
+          this.audioContext = null;
+          this.isRecording = false;
+          this.recognition = null;
+
+          // Sample episodes data
+          this.episodes = [
+            {
+              id: 1,
+              title: "Introdução ao Futuro da Educação",
+              description:
+                "Uma jornada profunda pelos conceitos fundamentais que moldarão a educação nas próximas décadas, explorando tecnologias emergentes e metodologias inovadoras.",
+              duration: "45:30",
+              durationSeconds: 2730,
+              listeners: "1.2k",
+              date: "Hoje",
+              category: "Educação",
+              rating: 4.9,
+              thumbnail: "🎯",
+              isNew: true,
+              transcript: [
+                {
+                  time: 0,
+                  text: "Host: Bem-vindos ao Multischool Podcast, onde exploramos o futuro da educação com tecnologia de ponta.",
+                },
+                {
+                  time: 15,
+                  text: "Hoje vamos mergulhar nos conceitos fundamentais que estão revolucionando a forma como aprendemos e ensinamos.",
+                },
+                {
+                  time: 45,
+                  text: "Começando com as metodologias ativas e como a inteligência artificial pode personalizar a experiência educacional.",
+                },
+                {
+                  time: 120,
+                  text: "Vamos explorar casos reais de implementação e os resultados surpreendentes que estamos vendo.",
+                },
+              ],
+              chapters: [
+                { time: 0, label: "🎯 Introdução e Contexto" },
+                { time: 300, label: "🧠 Conceitos Fundamentais" },
+                { time: 900, label: "🚀 Aplicações Práticas" },
+                { time: 1800, label: "💡 Conclusões e Futuro" },
+              ],
+            },
+            {
+              id: 2,
+              title: "Desenvolvimento Web Moderno com IA",
+              description:
+                "Técnicas avançadas e tendências atuais no desenvolvimento web com foco em performance, UX e integração de inteligência artificial.",
+              duration: "52:15",
+              durationSeconds: 3135,
+              listeners: "2.8k",
+              date: "Ontem",
+              category: "Tecnologia",
+              rating: 4.7,
+              thumbnail: "💻",
+              isPopular: true,
+              transcript: [
+                {
+                  time: 0,
+                  text: "Host: Hoje mergulhamos no mundo fascinante do desenvolvimento web moderno e como a IA está transformando nossa abordagem.",
+                },
+                {
+                  time: 30,
+                  text: "Vamos começar explorando as últimas tendências em frameworks e ferramentas que estão moldando o futuro da web.",
+                },
+              ],
+              chapters: [
+                { time: 0, label: "🌐 Panorama Atual do Dev Web" },
+                { time: 420, label: "⚡ Performance e Otimização" },
+                { time: 1200, label: "🎨 UX/UI com IA" },
+                { time: 2100, label: "🔮 O Futuro do Desenvolvimento" },
+              ],
+            },
+            {
+              id: 3,
+              title: "Inteligência Artificial na Educação",
+              description:
+                "Como a IA está transformando métodos de ensino, personalização da aprendizagem e criando experiências educacionais únicas.",
+              duration: "38:45",
+              durationSeconds: 2325,
+              listeners: "3.1k",
+              date: "2 dias atrás",
+              category: "IA & Educação",
+              rating: 4.8,
+              thumbnail: "🤖",
+              isTrending: true,
+              transcript: [
+                {
+                  time: 0,
+                  text: "Host: A revolução da inteligência artificial chegou definitivamente às salas de aula e está transformando tudo.",
+                },
+                {
+                  time: 25,
+                  text: "Hoje vamos explorar como algoritmos inteligentes podem personalizar o aprendizado para cada estudante.",
+                },
+              ],
+              chapters: [
+                { time: 0, label: "🤖 IA na Educação Hoje" },
+                { time: 380, label: "📚 Personalização Avançada" },
+                { time: 890, label: "🎓 Casos de Sucesso" },
+                { time: 1540, label: "🔬 Pesquisa e Inovação" },
+              ],
+            },
+            {
+              id: 4,
+              title: "Design Thinking para Educadores",
+              description:
+                "Metodologias de design aplicadas ao desenvolvimento de soluções educacionais inovadoras e centradas no usuário.",
+              duration: "41:20",
+              durationSeconds: 2480,
+              listeners: "1.9k",
+              date: "3 dias atrás",
+              category: "Design & Educação",
+              rating: 4.6,
+              thumbnail: "🎨",
+              transcript: [
+                {
+                  time: 0,
+                  text: "Host: O design thinking não é apenas para produtos - é uma ferramenta poderosa para repensar a educação.",
+                },
+              ],
+              chapters: [
+                { time: 0, label: "🎨 Fundamentos do Design Thinking" },
+                { time: 420, label: "🔍 Pesquisa e Empatia" },
+                { time: 980, label: "💡 Ideação e Prototipagem" },
+                { time: 1680, label: "🧪 Testes e Iteração" },
+              ],
+            },
+            {
+              id: 5,
+              title: "Metodologias Ativas na Prática",
+              description:
+                "Implementação real de metodologias ativas em diferentes contextos educacionais com exemplos práticos e resultados mensuráveis.",
+              duration: "49:12",
+              durationSeconds: 2952,
+              listeners: "2.3k",
+              date: "1 semana atrás",
+              category: "Metodologias",
+              rating: 4.9,
+              thumbnail: "⚡",
+              transcript: [
+                {
+                  time: 0,
+                  text: "Host: As metodologias ativas estão revolucionando salas de aula ao redor do mundo.",
+                },
+              ],
+              chapters: [
+                { time: 0, label: "⚡ Introdução às Metodologias Ativas" },
+                { time: 480, label: "🏫 Implementação em Sala de Aula" },
+                { time: 1320, label: "📊 Medindo Resultados" },
+                { time: 2200, label: "🚀 Escalando Iniciativas" },
+              ],
+            },
+            {
+              id: 6,
+              title: "Gamificação e Engajamento Digital",
+              description:
+                "Como elementos de jogos podem transformar a experiência educacional e aumentar significativamente o engajamento dos estudantes.",
+              duration: "36:28",
+              durationSeconds: 2188,
+              listeners: "1.7k",
+              date: "1 semana atrás",
+              category: "Gamificação",
+              rating: 4.5,
+              thumbnail: "🎮",
+              transcript: [
+                {
+                  time: 0,
+                  text: "Host: Jogos não são apenas entretenimento - podem ser ferramentas educacionais incrivelmente poderosas.",
+                },
+              ],
+              chapters: [
+                { time: 0, label: "🎮 Fundamentos da Gamificação" },
+                { time: 420, label: "🏆 Sistemas de Recompensa" },
+                { time: 980, label: "📱 Plataformas Digitais" },
+                { time: 1580, label: "📈 Análise de Impacto" },
+              ],
+            },
+          ];
+
+          // Playlists sample data
+          this.playlists = [
+            {
+              id: 1,
+              title: "Fundamentos da Educação Digital",
+              description:
+                "Conceitos essenciais para entender a transformação digital na educação",
+              episodes: [1, 3, 5],
+              duration: "2h 13min",
+              thumbnail: "📚",
+              isPersonal: true,
+            },
+            {
+              id: 2,
+              title: "Tecnologia & Inovação",
+              description: "Últimas tendências em tecnologia educacional",
+              episodes: [2, 3, 6],
+              duration: "2h 7min",
+              thumbnail: "🚀",
+              isPersonal: true,
+            },
+            {
+              id: 3,
+              title: "Metodologias Avançadas",
+              description: "Técnicas modernas de ensino e aprendizagem",
+              episodes: [4, 5],
+              duration: "1h 30min",
+              thumbnail: "⚡",
+              isPersonal: false,
+              isRecommended: true,
+            },
+          ];
+
+          this.init();
+        }
+
+        init() {
+          this.setupEventListeners();
+          this.loadEpisodes();
+          this.loadPlaylists();
+          this.loadCurrentEpisode();
+          this.setupSpeechRecognition();
+          this.setupAudioVisualization();
+          this.simulateProgress();
+          this.generateChapters();
+          this.generateTranscript();
+        }
+
+        setupEventListeners() {
+          // Player controls
+          document
+            .getElementById("play-btn")
+            .addEventListener("click", () => this.togglePlay());
+          document
+            .getElementById("back-btn")
+            .addEventListener("click", () => this.previousTrack());
+          document
+            .getElementById("forward-btn")
+            .addEventListener("click", () => this.nextTrack());
+          document
+            .getElementById("shuffle-btn")
+            .addEventListener("click", () => this.toggleShuffle());
+          document
+            .getElementById("repeat-btn")
+            .addEventListener("click", () => this.toggleRepeat());
+
+          // Progress bar
+          document
+            .getElementById("progress-container")
+            .addEventListener("click", (e) => this.seekTo(e));
+
+          // Speed controls
+          document.querySelectorAll(".speed-btn").forEach((btn) => {
+            btn.addEventListener("click", (e) =>
+              this.setSpeed(e.target.dataset.speed)
+            );
+          });
+
+          // Theme toggle
+          document
+            .getElementById("theme-toggle")
+            .addEventListener("click", () => this.toggleTheme());
+
+          // Search toggle
+          document
+            .getElementById("search-toggle")
+            .addEventListener("click", () => this.toggleSearch());
+
+          // Chat functionality
+          document
+            .getElementById("chat-input")
+            .addEventListener("keypress", (e) => {
+              if (e.key === "Enter") this.sendMessage();
+            });
+          document
+            .getElementById("chat-input")
+            .addEventListener("input", () => this.toggleSendButton());
+          document
+            .getElementById("chat-send")
+            .addEventListener("click", () => this.sendMessage());
+
+          // Voice control
+          document
+            .getElementById("voice-btn")
+            .addEventListener("click", () => this.toggleVoiceRecording());
+
+          // Playlist tabs
+          document.querySelectorAll(".playlist-tab").forEach((tab) => {
+            tab.addEventListener("click", (e) =>
+              this.switchPlaylistTab(e.target.dataset.tab)
+            );
+          });
+
+          // Filter buttons
+          document.querySelectorAll(".filter-btn").forEach((btn) => {
+            btn.addEventListener("click", (e) =>
+              this.applyFilter(e.target.dataset.filter)
+            );
+          });
+
+          // Search functionality
+          document
+            .getElementById("search-input")
+            .addEventListener("input", (e) =>
+              this.searchEpisodes(e.target.value)
+            );
+
+          // Recommendations
+          document.querySelectorAll(".recommendation-item").forEach((item) => {
+            item.addEventListener("click", (e) =>
+              this.playEpisode(parseInt(e.currentTarget.dataset.episode))
+            );
+          });
+
+          // Generate chapters button
+          document
+            .getElementById("generate-chapters")
+            .addEventListener("click", () => this.generateChapters());
+
+          // Transcript actions
+          document
+            .getElementById("search-transcript")
+            .addEventListener("click", () => this.searchInTranscript());
+          document
+            .getElementById("download-transcript")
+            .addEventListener("click", () => this.downloadTranscript());
+
+          // More recommendations
+          document
+            .getElementById("more-recommendations")
+            .addEventListener("click", () => this.loadMoreRecommendations());
+
+          // Subscribe button
+          document
+            .getElementById("subscribe-btn")
+            .addEventListener("click", () => this.toggleSubscription());
+        }
+
+        togglePlay() {
+          this.isPlaying = !this.isPlaying;
+          const playBtn = document.getElementById("play-btn");
+
+          if (this.isPlaying) {
+            playBtn.innerHTML = "⏸️";
+            playBtn.style.animation = "pulse 2s infinite";
+            this.showNotification("A reproduzir episódio...", "info");
+          } else {
+            playBtn.innerHTML = "▶️";
+            playBtn.style.animation = "";
+            this.showNotification("Pausado", "info");
+          }
+        }
+
+        previousTrack() {
+          if (this.currentEpisode && this.currentEpisode.id > 1) {
+            this.playEpisode(this.currentEpisode.id - 1);
+          }
+        }
+
+        nextTrack() {
+          if (
+            this.currentEpisode &&
+            this.currentEpisode.id < this.episodes.length
+          ) {
+            this.playEpisode(this.currentEpisode.id + 1);
+          }
+        }
+
+        toggleShuffle() {
+          const shuffleBtn = document.getElementById("shuffle-btn");
+          shuffleBtn.classList.toggle("active");
+          const isActive = shuffleBtn.classList.contains("active");
+          shuffleBtn.style.color = isActive ? "var(--primary)" : "";
+          this.showNotification(
+            isActive ? "Modo aleatório ativado" : "Modo aleatório desativado",
+            "info"
+          );
+        }
+
+        toggleRepeat() {
+          const repeatBtn = document.getElementById("repeat-btn");
+          repeatBtn.classList.toggle("active");
+          const isActive = repeatBtn.classList.contains("active");
+          repeatBtn.style.color = isActive ? "var(--primary)" : "";
+          this.showNotification(
+            isActive ? "Repetir ativado" : "Repetir desativado",
+            "info"
+          );
+        }
+
+        setSpeed(speed) {
+          this.playbackRate = parseFloat(speed);
+          document
+            .querySelectorAll(".speed-btn")
+            .forEach((btn) => btn.classList.remove("active"));
+          document
+            .querySelector(`[data-speed="${speed}"]`)
+            .classList.add("active");
+          this.showNotification(`Velocidade: ${speed}x`, "info");
+        }
+
+        seekTo(e) {
+          const progressContainer =
+            document.getElementById("progress-container");
+          const rect = progressContainer.getBoundingClientRect();
+          const percent = (e.clientX - rect.left) / rect.width;
+          this.currentTime = Math.floor(percent * this.duration);
+          this.updateProgress();
+        }
+
+        updateProgress() {
+          const progressBar = document.getElementById("progress-bar");
+          const currentTimeElement = document.getElementById("current-time");
+
+          const percent = (this.currentTime / this.duration) * 100;
+          progressBar.style.width = `${percent}%`;
+          currentTimeElement.textContent = this.formatTime(this.currentTime);
+        }
+
+        simulateProgress() {
+          if (this.isPlaying && this.currentTime < this.duration) {
+            this.currentTime += this.playbackRate;
+            this.updateProgress();
+          }
+
+          setTimeout(() => this.simulateProgress(), 1000);
+        }
+
+        formatTime(seconds) {
+          const mins = Math.floor(seconds / 60);
+          const secs = Math.floor(seconds % 60);
+          return `${mins.toString().padStart(2, "0")}:${secs
+            .toString()
+            .padStart(2, "0")}`;
+        }
+
+        toggleTheme() {
+          const body = document.body;
+          const themeIcon = document.getElementById("theme-icon");
+
+          if (body.classList.contains("theme-light")) {
+            body.classList.remove("theme-light");
+            themeIcon.textContent = "🌙";
+            this.showNotification("Tema escuro ativado", "info");
+          } else {
+            body.classList.add("theme-light");
+            themeIcon.textContent = "☀️";
+            this.showNotification("Tema claro ativado", "info");
+          }
+        }
+
+        toggleSearch() {
+          const searchSection = document.getElementById("search-section");
+          const isVisible = searchSection.style.display !== "none";
+
+          if (isVisible) {
+            searchSection.style.display = "none";
+          } else {
+            searchSection.style.display = "block";
+            searchSection.classList.add("fade-in");
+            document.getElementById("search-input").focus();
+          }
+        }
+
+        toggleSendButton() {
+          const input = document.getElementById("chat-input");
+          const sendBtn = document.getElementById("chat-send");
+          sendBtn.disabled = input.value.trim().length === 0;
+        }
+
+        async sendMessage() {
+          const input = document.getElementById("chat-input");
+          const message = input.value.trim();
+
+          if (!message) return;
+
+          // Add user message
+          this.addMessage(message, "user");
+          input.value = "";
+          this.toggleSendButton();
+
+          // Show typing indicator
+          this.showTypingIndicator();
+
+          // Simulate AI response
+          setTimeout(() => {
+            this.hideTypingIndicator();
+            this.generateAIResponse(message);
+          }, Math.random() * 2000 + 1000);
+        }
+
+        addMessage(text, sender) {
+          const messagesContainer = document.getElementById("chat-messages");
+          const messageDiv = document.createElement("div");
+          messageDiv.className = `message ${sender}`;
+
+          const time = new Date().toLocaleTimeString("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+
+          messageDiv.innerHTML = `
+      ${text}
+      <div class="message-time">${time}</div>
+    `;
+
+          messagesContainer.appendChild(messageDiv);
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        showTypingIndicator() {
+          document.getElementById("typing-indicator").style.display = "flex";
+          document.getElementById("chat-messages").scrollTop =
+            document.getElementById("chat-messages").scrollHeight;
+        }
+
+        hideTypingIndicator() {
+          document.getElementById("typing-indicator").style.display = "none";
+        }
+
+        generateAIResponse(userMessage) {
+          const responses = [
+            `Interessante pergunta sobre "${userMessage}". Com base no episódio atual, posso destacar que os pontos principais incluem metodologias inovadoras e tecnologias emergentes. Gostaria de mais detalhes sobre algum aspecto específico?`,
+            `Sobre "${userMessage}" - este tópico foi abordado especificamente aos 15:30 do episódio. O apresentador menciona dados importantes e cases de sucesso. Posso te direcionar para esse momento específico?`,
+            `Ótima questão! "${userMessage}" se relaciona diretamente com os conceitos discutidos no episódio 3 sobre IA na Educação. Recomendo também ouvir o episódio 5 sobre Metodologias Ativas. Quer que eu crie uma playlist personalizada?`,
+            `Baseado em "${userMessage}", identifiquei 3 episódios relevantes na sua biblioteca. Além disso, encontrei 2 momentos específicos no episódio atual que respondem diretamente à sua pergunta. Vamos explorar?`,
+          ];
+
+          const response =
+            responses[Math.floor(Math.random() * responses.length)];
+          this.addMessage(response, "ai");
+        }
+
+        setupSpeechRecognition() {
+          if (
+            "webkitSpeechRecognition" in window ||
+            "SpeechRecognition" in window
+          ) {
+            const SpeechRecognition =
+              window.SpeechRecognition || window.webkitSpeechRecognition;
+            this.recognition = new SpeechRecognition();
+            this.recognition.continuous = false;
+            this.recognition.interimResults = false;
+            this.recognition.lang = "pt-BR";
+
+            this.recognition.onresult = (event) => {
+              const transcript = event.results[0][0].transcript;
+              document.getElementById("chat-input").value = transcript;
+              this.toggleSendButton();
+              this.sendMessage();
+            };
+
+            this.recognition.onerror = () => {
+              this.showNotification("Erro no reconhecimento de voz", "error");
+              this.stopVoiceRecording();
+            };
+
+            this.recognition.onend = () => {
+              this.stopVoiceRecording();
+            };
+          }
+        }
+
+        toggleVoiceRecording() {
+          if (!this.recognition) {
+            this.showNotification(
+              "Reconhecimento de voz não suportado",
+              "error"
+            );
+            return;
+          }
+
+          const voiceBtn = document.getElementById("voice-btn");
+          const voiceStatus = document.getElementById("voice-status");
+
+          if (this.isRecording) {
+            this.recognition.stop();
+            this.stopVoiceRecording();
+          } else {
+            this.recognition.start();
+            this.isRecording = true;
+            voiceBtn.classList.add("recording");
+            voiceStatus.textContent = "Ouvindo...";
+            this.showNotification("Fale sua pergunta...", "info");
+          }
+        }
+
+        stopVoiceRecording() {
+          this.isRecording = false;
+          document.getElementById("voice-btn").classList.remove("recording");
+          document.getElementById("voice-status").textContent = "";
+        }
+
+        setupAudioVisualization() {
+          // Simular visualização de áudio na capa do episódio
+          const cover = document.getElementById("episode-cover");
+          let animationId;
+
+          const animate = () => {
+            if (this.isPlaying) {
+              const intensity = 0.95 + Math.random() * 0.1;
+              cover.style.transform = `scale(${intensity})`;
+              cover.style.filter = `hue-rotate(${Math.random() * 30}deg)`;
+            } else {
+              cover.style.transform = "scale(1)";
+              cover.style.filter = "hue-rotate(0deg)";
+            }
+            animationId = requestAnimationFrame(animate);
+          };
+
+          animate();
+        }
+
+        loadEpisodes() {
+          const grid = document.getElementById("episodes-grid");
+          grid.innerHTML = "";
+
+          this.episodes.forEach((episode) => {
+            const episodeCard = this.createEpisodeCard(episode);
+            grid.appendChild(episodeCard);
+          });
+        }
+
+        createEpisodeCard(episode) {
+          const card = document.createElement("div");
+          card.className = "episode-card";
+          card.style.animationDelay = `${Math.random() * 0.5}s`;
+          card.classList.add("scale-in");
+
+          const badges = [];
+          if (episode.isNew)
+            badges.push(
+              '<span style="background: var(--accent); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">NOVO</span>'
+            );
+          if (episode.isPopular)
+            badges.push(
+              '<span style="background: var(--warning); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">POPULAR</span>'
+            );
+          if (episode.isTrending)
+            badges.push(
+              '<span style="background: var(--danger); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">EM ALTA</span>'
+            );
+
+          card.innerHTML = `
+      <div class="episode-thumbnail">
+        ${episode.thumbnail}
+        <div class="play-overlay">
+          <button onclick="platform.playEpisode(${episode.id})">▶️</button>
+        </div>
+      </div>
+      <div class="episode-content">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+          <h4>${episode.title}</h4>
+          <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+            ${badges.join("")}
+          </div>
+        </div>
+        <p>${episode.description}</p>
+        <div class="episode-stats">
+          <div class="stat-item">
+            <span>👥</span>
+            <span>${episode.listeners}</span>
+          </div>
+          <div class="stat-item">
+            <span>⏱️</span>
+            <span>${episode.duration}</span>
+          </div>
+          <div class="stat-item">
+            <span>⭐</span>
+            <span>${episode.rating}</span>
+          </div>
+          <div class="stat-item">
+            <span>📅</span>
+            <span>${episode.date}</span>
+          </div>
+        </div>
+        <div class="episode-actions">
+          <button class="action-btn primary" onclick="platform.playEpisode(${
+            episode.id
+          })">
+            ▶️ Ouvir
+          </button>
+          <button class="action-btn secondary" onclick="platform.addToPlaylist(${
+            episode.id
+          })">
+            ➕ Adicionar
+          </button>
+          <button class="action-btn secondary" onclick="platform.shareEpisode(${
+            episode.id
+          })">
+            📤 Compartilhar
+          </button>
+        </div>
+      </div>
+    `;
+
+          return card;
+        }
+
+        playEpisode(episodeId) {
+          const episode = this.episodes.find((ep) => ep.id === episodeId);
+          if (!episode) return;
+
+          this.currentEpisode = episode;
+          this.duration = episode.durationSeconds;
+          this.currentTime = 0;
+
+          // Update UI
+          document.getElementById("current-episode-title").textContent =
+            episode.title;
+          document.getElementById("current-listeners").textContent =
+            episode.listeners + " ouvintes";
+          document.getElementById("current-duration").textContent =
+            episode.duration;
+          document.getElementById("current-date").textContent = episode.date;
+          document.getElementById("current-rating").textContent =
+            episode.rating;
+          document.getElementById("total-time").textContent = episode.duration;
+          document.getElementById("episode-cover").textContent =
+            episode.thumbnail;
+
+          // Auto-play
+          if (!this.isPlaying) {
+            this.togglePlay();
+          }
+
+          this.showNotification(`Reproduzindo: ${episode.title}`, "success");
+          this.generateChapters();
+          this.generateTranscript();
+        }
+
+        loadCurrentEpisode() {
+          this.playEpisode(1); // Load first episode by default
+        }
+
+        generateChapters() {
+          const chaptersContainer = document.querySelector(".chapters-list");
+          chaptersContainer.innerHTML = "";
+
+          if (!this.currentEpisode || !this.currentEpisode.chapters) return;
+
+          this.currentEpisode.chapters.forEach((chapter, index) => {
+            const button = document.createElement("button");
+            button.className = "chapter-btn";
+            button.dataset.time = chapter.time;
+            button.innerHTML = `${chapter.label} (${this.formatTime(
+              chapter.time
+            )})`;
+
+            button.addEventListener("click", () => {
+              this.currentTime = chapter.time;
+              this.updateProgress();
+              document
+                .querySelectorAll(".chapter-btn")
+                .forEach((btn) => btn.classList.remove("active"));
+              button.classList.add("active");
+              this.showNotification(`Navegando para: ${chapter.label}`, "info");
+            });
+
+            chaptersContainer.appendChild(button);
+          });
+        }
+
+        generateTranscript() {
+          const transcriptContainer = document.getElementById("ai-transcript");
+          transcriptContainer.innerHTML = "";
+
+          if (!this.currentEpisode || !this.currentEpisode.transcript) return;
+
+          this.currentEpisode.transcript.forEach((item) => {
+            const p = document.createElement("p");
+            p.innerHTML = `<strong>[${this.formatTime(item.time)}]</strong> ${
+              item.text
+            }`;
+            p.style.marginBottom = "8px";
+            p.style.cursor = "pointer";
+
+            p.addEventListener("click", () => {
+              this.currentTime = item.time;
+              this.updateProgress();
+              this.showNotification(
+                `Navegando para ${this.formatTime(item.time)}`,
+                "info"
+              );
+            });
+
+            transcriptContainer.appendChild(p);
+          });
+        }
+
+        loadPlaylists() {
+          const container = document.getElementById("my-playlists");
+          container.innerHTML = "";
+
+          this.playlists
+            .filter((p) => p.isPersonal)
+            .forEach((playlist) => {
+              const card = document.createElement("div");
+              card.className = "playlist-card";
+              card.innerHTML = `
+        <h5>${playlist.thumbnail} ${playlist.title}</h5>
+        <p>${playlist.description}</p>
+        <div class="playlist-meta">
+          <span>${playlist.episodes.length} episódios</span>
+          <span>${playlist.duration}</span>
+        </div>
+      `;
+
+              card.addEventListener("click", () =>
+                this.playPlaylist(playlist.id)
+              );
+              container.appendChild(card);
+            });
+
+          // Add create new playlist card
+          const createCard = document.createElement("div");
+          createCard.className = "playlist-card";
+          createCard.style.border = "2px dashed var(--border)";
+          createCard.style.display = "flex";
+          createCard.style.alignItems = "center";
+          createCard.style.justifyContent = "center";
+          createCard.style.minHeight = "120px";
+          createCard.innerHTML = `
+      <div style="text-align: center; color: var(--text-secondary);">
+        <div style="font-size: 2rem; margin-bottom: 8px;">➕</div>
+        <div>Criar Nova Playlist</div>
+      </div>
+    `;
+
+          createCard.addEventListener("click", () => this.createNewPlaylist());
+          container.appendChild(createCard);
+        }
+
+        switchPlaylistTab(tabName) {
+          document
+            .querySelectorAll(".playlist-tab")
+            .forEach((tab) => tab.classList.remove("active"));
+          document
+            .querySelector(`[data-tab="${tabName}"]`)
+            .classList.add("active");
+
+          const container = document.getElementById("my-playlists");
+
+          switch (tabName) {
+            case "my-playlists":
+              this.loadPlaylists();
+              break;
+            case "recommended":
+              this.loadRecommendedPlaylists();
+              break;
+            case "trending":
+              this.loadTrendingPlaylists();
+              break;
+            case "create":
+              this.showCreatePlaylistForm();
+              break;
+          }
+        }
+
+        loadRecommendedPlaylists() {
+          const container = document.getElementById("my-playlists");
+          container.innerHTML = `
+      <div style="text-align: center; padding: 40px;">
+        <div style="font-size: 3rem; margin-bottom: 16px;">🤖</div>
+        <h3 style="margin-bottom: 8px;">IA Analisando...</h3>
+        <p style="color: var(--text-secondary);">Criando playlists baseadas no seu perfil</p>
+        <div class="loading" style="margin: 20px auto;"></div>
+      </div>
+    `;
+
+          setTimeout(() => {
+            container.innerHTML = "";
+            const recommendedPlaylists = [
+              {
+                title: "🎯 Para Iniciantes",
+                description: "Conceitos básicos para começar",
+                episodes: 3,
+                duration: "2h 15min",
+              },
+              {
+                title: "🚀 Avançado",
+                description: "Conteúdo para especialistas",
+                episodes: 5,
+                duration: "3h 45min",
+              },
+              {
+                title: "💡 Tendências",
+                description: "Últimas novidades",
+                episodes: 4,
+                duration: "2h 30min",
+              },
+            ];
+
+            recommendedPlaylists.forEach((playlist) => {
+              const card = document.createElement("div");
+              card.className = "playlist-card";
+              card.innerHTML = `
+          <h5>${playlist.title}</h5>
+          <p>${playlist.description}</p>
+          <div class="playlist-meta">
+            <span>${playlist.episodes} episódios</span>
+            <span>${playlist.duration}</span>
+          </div>
+        `;
+              container.appendChild(card);
+            });
+          }, 2000);
+        }
+
+        loadTrendingPlaylists() {
+          const container = document.getElementById("my-playlists");
+          container.innerHTML = "";
+
+          const trendingPlaylists = [
+            {
+              title: "🔥 Mais Ouvidas",
+              description: "Os episódios mais populares da semana",
+              episodes: 6,
+              duration: "4h 20min",
+            },
+            {
+              title: "📈 Em Crescimento",
+              description: "Conteúdos que estão ganhando destaque",
+              episodes: 4,
+              duration: "2h 50min",
+            },
+            {
+              title: "⚡ Viral",
+              description: "Episódios que todos estão comentando",
+              episodes: 3,
+              duration: "2h 10min",
+            },
+          ];
+
+          trendingPlaylists.forEach((playlist) => {
+            const card = document.createElement("div");
+            card.className = "playlist-card";
+            card.innerHTML = `
+        <h5>${playlist.title}</h5>
+        <p>${playlist.description}</p>
+        <div class="playlist-meta">
+          <span>${playlist.episodes} episódios</span>
+          <span>${playlist.duration}</span>
+        </div>
+      `;
+            container.appendChild(card);
+          });
+        }
+
+        showCreatePlaylistForm() {
+          const container = document.getElementById("my-playlists");
+          container.innerHTML = `
+      <div style="max-width: 400px; margin: 0 auto;">
+        <h3 style="margin-bottom: 20px; text-align: center;">✨ Criar Nova Playlist</h3>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 600;">Nome da Playlist</label>
+          <input type="text" id="playlist-name" placeholder="Ex: Meus Favoritos" 
+                 style="width: 100%; padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text);">
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 600;">Descrição</label>
+          <textarea id="playlist-description" placeholder="Descreva sua playlist..." 
+                    style="width: 100%; height: 80px; padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); resize: vertical;"></textarea>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 600;">Episódios</label>
+          <div id="episode-selector" style="max-height: 200px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--surface);">
+            ${this.episodes
+              .map(
+                (ep) => `
+              <label style="display: flex; align-items: center; padding: 12px; cursor: pointer; border-bottom: 1px solid var(--border);">
+                <input type="checkbox" value="${ep.id}" style="margin-right: 12px;">
+                <div>
+                  <div style="font-weight: 600; margin-bottom: 4px;">${ep.title}</div>
+                  <div style="font-size: 0.85rem; color: var(--text-secondary);">${ep.duration} • ${ep.listeners}</div>
+                </div>
+              </label>
+            `
+              )
+              .join("")}
+          </div>
+        </div>
+        
+        <div style="display: flex; gap: 12px;">
+          <button onclick="platform.switchPlaylistTab('my-playlists')" 
+                  style="flex: 1; padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); cursor: pointer;">
+            Cancelar
+          </button>
+          <button onclick="platform.createPlaylist()" 
+                  style="flex: 1; padding: 12px; background: var(--primary); border: none; border-radius: 8px; color: white; cursor: pointer; font-weight: 600;">
+            Criar Playlist
+          </button>
+        </div>
+      </div>
+    `;
+        }
+
+        createPlaylist() {
+          const name = document.getElementById("playlist-name").value.trim();
+          const description = document
+            .getElementById("playlist-description")
+            .value.trim();
+          const selectedEpisodes = Array.from(
+            document.querySelectorAll(
+              '#episode-selector input[type="checkbox"]:checked'
+            )
+          ).map((cb) => parseInt(cb.value));
+
+          if (!name) {
+            this.showNotification(
+              "Por favor, insira um nome para a playlist",
+              "error"
+            );
+            return;
+          }
+
+          if (selectedEpisodes.length === 0) {
+            this.showNotification("Selecione pelo menos um episódio", "error");
+            return;
+          }
+
+          const newPlaylist = {
+            id: this.playlists.length + 1,
+            title: name,
+            description: description || "Playlist personalizada",
+            episodes: selectedEpisodes,
+            duration: this.calculatePlaylistDuration(selectedEpisodes),
+            thumbnail: "🎵",
+            isPersonal: true,
+          };
+
+          this.playlists.push(newPlaylist);
+          this.showNotification("Playlist criada com sucesso!", "success");
+          this.switchPlaylistTab("my-playlists");
+        }
+
+        calculatePlaylistDuration(episodeIds) {
+          const totalSeconds = episodeIds.reduce((total, id) => {
+            const episode = this.episodes.find((ep) => ep.id === id);
+            return total + (episode ? episode.durationSeconds : 0);
+          }, 0);
+
+          const hours = Math.floor(totalSeconds / 3600);
+          const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+          if (hours > 0) {
+            return `${hours}h ${minutes}min`;
+          }
+          return `${minutes}min`;
+        }
+
+        playPlaylist(playlistId) {
+          const playlist = this.playlists.find((p) => p.id === playlistId);
+          if (!playlist || !playlist.episodes.length) return;
+
+          this.playEpisode(playlist.episodes[0]);
+          this.showNotification(
+            `Reproduzindo playlist: ${playlist.title}`,
+            "success"
+          );
+        }
+
+        addToPlaylist(episodeId) {
+          // Show playlist selection modal
+          this.showNotification(
+            "Episódio adicionado à playlist padrão",
+            "success"
+          );
+        }
+
+        shareEpisode(episodeId) {
+          const episode = this.episodes.find((ep) => ep.id === episodeId);
+          if (!episode) return;
+
+          if (navigator.share) {
+            navigator.share({
+              title: episode.title,
+              text: episode.description,
+              url: window.location.href + `#episode-${episodeId}`,
+            });
+          } else {
+            // Fallback para navegadores sem suporte ao Web Share API
+            const shareUrl = window.location.href + `#episode-${episodeId}`;
+            navigator.clipboard.writeText(shareUrl).then(() => {
+              this.showNotification(
+                "Link copiado para a área de transferência!",
+                "success"
+              );
+            });
+          }
+        }
+
+        applyFilter(filter) {
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach((btn) => btn.classList.remove("active"));
+          document
+            .querySelector(`[data-filter="${filter}"]`)
+            .classList.add("active");
+
+          let filteredEpisodes = [...this.episodes];
+
+          switch (filter) {
+            case "recent":
+              filteredEpisodes = this.episodes.filter(
+                (ep) =>
+                  ep.date === "Hoje" ||
+                  ep.date === "Ontem" ||
+                  ep.date.includes("dias atrás")
+              );
+              break;
+            case "popular":
+              filteredEpisodes = this.episodes.filter(
+                (ep) => ep.isPopular || parseInt(ep.listeners) > 2000
+              );
+              break;
+            case "technology":
+              filteredEpisodes = this.episodes.filter(
+                (ep) =>
+                  ep.category.toLowerCase().includes("tecnologia") ||
+                  ep.title.toLowerCase().includes("web") ||
+                  ep.title.toLowerCase().includes("ia")
+              );
+              break;
+            case "education":
+              filteredEpisodes = this.episodes.filter(
+                (ep) =>
+                  ep.category.toLowerCase().includes("educação") ||
+                  ep.category.toLowerCase().includes("metodologias")
+              );
+              break;
+            case "ai":
+              filteredEpisodes = this.episodes.filter(
+                (ep) =>
+                  ep.title.toLowerCase().includes("ia") ||
+                  ep.title.toLowerCase().includes("inteligência") ||
+                  ep.description
+                    .toLowerCase()
+                    .includes("inteligência artificial")
+              );
+              break;
+          }
+
+          this.displayFilteredEpisodes(filteredEpisodes);
+          this.showNotification(
+            `Mostrando ${filteredEpisodes.length} episódios`,
+            "info"
+          );
+        }
+
+        displayFilteredEpisodes(episodes) {
+          const grid = document.getElementById("episodes-grid");
+          grid.innerHTML = "";
+
+          if (episodes.length === 0) {
+            grid.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+          <div style="font-size: 3rem; margin-bottom: 16px;">🔍</div>
+          <h3 style="margin-bottom: 8px;">Nenhum episódio encontrado</h3>
+          <p style="color: var(--text-secondary);">Tente ajustar os filtros ou buscar por outros termos</p>
+        </div>
+      `;
+            return;
+          }
+
+          episodes.forEach((episode) => {
+            const episodeCard = this.createEpisodeCard(episode);
+            grid.appendChild(episodeCard);
+          });
+        }
+
+        searchEpisodes(query) {
+          if (!query.trim()) {
+            this.loadEpisodes();
+            return;
+          }
+
+          const searchTerm = query.toLowerCase();
+          const filteredEpisodes = this.episodes.filter(
+            (episode) =>
+              episode.title.toLowerCase().includes(searchTerm) ||
+              episode.description.toLowerCase().includes(searchTerm) ||
+              episode.category.toLowerCase().includes(searchTerm)
+          );
+
+          this.displayFilteredEpisodes(filteredEpisodes);
+        }
+
+        searchInTranscript() {
+          const query = prompt("O que você quer encontrar na transcrição?");
+          if (!query) return;
+
+          const transcript = document.getElementById("ai-transcript");
+          const paragraphs = transcript.querySelectorAll("p");
+
+          let found = false;
+          paragraphs.forEach((p) => {
+            if (p.textContent.toLowerCase().includes(query.toLowerCase())) {
+              p.style.background = "var(--warning)";
+              p.style.color = "var(--dark)";
+              p.style.borderRadius = "4px";
+              p.style.padding = "4px";
+              p.scrollIntoView({ behavior: "smooth", block: "center" });
+              found = true;
+
+              setTimeout(() => {
+                p.style.background = "";
+                p.style.color = "";
+                p.style.padding = "";
+              }, 3000);
+            }
+          });
+
+          if (!found) {
+            this.showNotification(
+              "Termo não encontrado na transcrição",
+              "error"
+            );
+          } else {
+            this.showNotification(`Encontrado: "${query}"`, "success");
+          }
+        }
+
+        downloadTranscript() {
+          if (!this.currentEpisode) return;
+
+          const transcriptText = this.currentEpisode.transcript
+            .map((item) => `[${this.formatTime(item.time)}] ${item.text}`)
+            .join("\n\n");
+
+          const blob = new Blob([transcriptText], { type: "text/plain" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `${this.currentEpisode.title} - Transcrição.txt`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+
+          this.showNotification("Transcrição baixada com sucesso!", "success");
+        }
+
+        loadMoreRecommendations() {
+          const button = document.getElementById("more-recommendations");
+          button.innerHTML = '<div class="loading"></div>';
+          button.disabled = true;
+
+          setTimeout(() => {
+            const newRecommendations = [
+              {
+                id: 7,
+                title: "Neurociência da Aprendizagem",
+                compatibility: "91%",
+              },
+              {
+                id: 8,
+                title: "Realidade Virtual na Educação",
+                compatibility: "88%",
+              },
+              {
+                id: 9,
+                title: "Blockchain para Certificações",
+                compatibility: "85%",
+              },
+            ];
+
+            const container = document.getElementById("ai-recommendations");
+            newRecommendations.forEach((rec) => {
+              const div = document.createElement("div");
+              div.className = "recommendation-item";
+              div.style =
+                "margin-bottom: 12px; padding: 12px; background: var(--surface); border-radius: 8px; cursor: pointer;";
+              div.innerHTML = `
+          <div style="font-weight: 600; margin-bottom: 4px;">🧠 Episódio ${rec.id} - ${rec.title}</div>
+          <div style="font-size: 0.85rem; color: var(--text-secondary);">${rec.compatibility} de compatibilidade</div>
+        `;
+              container.insertBefore(div, button);
+            });
+
+            button.innerHTML = "✨ Recomendações Atualizadas";
+            button.disabled = false;
+
+            setTimeout(() => {
+              button.innerHTML = "🔄 Mais Recomendações";
+            }, 2000);
+          }, 1500);
+        }
+
+        toggleSubscription() {
+          const button = document.getElementById("subscribe-btn");
+          const isSubscribed = button.textContent.includes("Seguindo");
+
+          if (isSubscribed) {
+            button.innerHTML = "✨ Seguir Podcast";
+            button.style.background =
+              "linear-gradient(135deg, var(--primary), var(--secondary))";
+            this.showNotification("Você parou de seguir este podcast", "info");
+          } else {
+            button.innerHTML = "✅ Seguindo";
+            button.style.background =
+              "linear-gradient(135deg, var(--accent), #059669)";
+            this.showNotification(
+              "Agora você está seguindo este podcast!",
+              "success"
+            );
+          }
+        }
+
+        showNotification(message, type = "info") {
+          const notification = document.getElementById("notification");
+          notification.className = `notification ${type}`;
+          notification.querySelector(".notification-content").textContent =
+            message;
+          notification.classList.add("show");
+
+          setTimeout(() => {
+            notification.classList.remove("show");
+          }, 3000);
+        }
+
+        // Animation observers
+        setupAnimationObservers() {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("fade-in");
+              }
+            });
+          });
+
+          document
+            .querySelectorAll(".episode-card, .feature-card, .ai-card")
+            .forEach((el) => {
+              observer.observe(el);
+            });
+        }
+
+        // Initialize platform
+        static init() {
+          return new MultischoolPodcastPlatform();
+        }
+      }
+
+      // Initialize platform when DOM is loaded
+      document.addEventListener("DOMContentLoaded", () => {
+        window.platform = MultischoolPodcastPlatform.init();
+      });
+
+      // PWA Service Worker Registration
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then(() => console.log("SW registered"))
+            .catch(() => console.log("SW registration failed"));
+        });
+      }
+
+      // Keyboard shortcuts
+      document.addEventListener("keydown", (e) => {
+        if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")
+          return;
+
+        switch (e.key) {
+          case " ":
+          case "k":
+            e.preventDefault();
+            platform.togglePlay();
+            break;
+          case "ArrowRight":
+            e.preventDefault();
+            platform.currentTime = Math.min(
+              platform.currentTime + 10,
+              platform.duration
+            );
+            platform.updateProgress();
+            break;
+          case "ArrowLeft":
+            e.preventDefault();
+            platform.currentTime = Math.max(platform.currentTime - 10, 0);
+            platform.updateProgress();
+            break;
+          case "ArrowUp":
+            e.preventDefault();
+            platform.setSpeed(Math.min(platform.playbackRate + 0.25, 2));
+            break;
+          case "ArrowDown":
+            e.preventDefault();
+            platform.setSpeed(Math.max(platform.playbackRate - 0.25, 0.5));
+            break;
+          case "n":
+            e.preventDefault();
+            platform.nextTrack();
+            break;
+          case "p":
+            e.preventDefault();
+            platform.previousTrack();
+            break;
+          case "/":
+            e.preventDefault();
+            platform.toggleSearch();
+            break;
+          case "Escape":
+            const searchSection = document.getElementById("search-section");
+            if (searchSection.style.display !== "none") {
+              platform.toggleSearch();
+            }
+            break;
+        }
+      });
+
+      // Advanced Features
+
+      // Offline support
+      window.addEventListener("online", () => {
+        platform.showNotification("Conexão restaurada", "success");
+      });
+
+      window.addEventListener("offline", () => {
+        platform.showNotification(
+          "Você está offline. Algumas funcionalidades podem estar limitadas.",
+          "info"
+        );
+      });
+
+      // Background playback simulation
+      let backgroundInterval;
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && platform.isPlaying) {
+          // Continue playback in background
+          backgroundInterval = setInterval(() => {
+            if (platform.currentTime < platform.duration) {
+              platform.currentTime += platform.playbackRate;
+            }
+          }, 1000);
+        } else if (!document.hidden && backgroundInterval) {
+          clearInterval(backgroundInterval);
+          platform.updateProgress();
+        }
+      });
+
+      // Media Session API for system controls
+      if ("mediaSession" in navigator) {
+        navigator.mediaSession.setActionHandler("play", () => {
+          if (!platform.isPlaying) platform.togglePlay();
+        });
+
+        navigator.mediaSession.setActionHandler("pause", () => {
+          if (platform.isPlaying) platform.togglePlay();
+        });
+
+        navigator.mediaSession.setActionHandler("previoustrack", () => {
+          platform.previousTrack();
+        });
+
+        navigator.mediaSession.setActionHandler("nexttrack", () => {
+          platform.nextTrack();
+        });
+
+        navigator.mediaSession.setActionHandler("seekto", (details) => {
+          platform.currentTime = details.seekTime;
+          platform.updateProgress();
+        });
+      }
+
+      // Update media session metadata
+      function updateMediaSession(episode) {
+        if ("mediaSession" in navigator && episode) {
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: episode.title,
+            artist: "Multischool Podcast",
+            album: "Educação & Tecnologia",
+            artwork: [
+              { src: "/icon-96x96.png", sizes: "96x96", type: "image/png" },
+              { src: "/icon-192x192.png", sizes: "192x192", type: "image/png" },
+              { src: "/icon-512x512.png", sizes: "512x512", type: "image/png" },
+            ],
+          });
+        }
+      }
+
+      // Auto-save user preferences
+      function saveUserPreferences() {
+        const preferences = {
+          theme: document.body.classList.contains("theme-light")
+            ? "light"
+            : "dark",
+          playbackRate: platform.playbackRate,
+          lastEpisode: platform.currentEpisode?.id,
+          volume: 1.0,
+        };
+
+        try {
+          const data = JSON.stringify(preferences);
+          console.log("Preferences would be saved:", data);
+          // Note: localStorage não é usado devido às restrições do ambiente
+        } catch (error) {
+          console.log("Could not save preferences");
+        }
+      }
+
+      // Auto-save preferences when they change
+      setInterval(saveUserPreferences, 30000); // Save every 30 seconds
+    </script>
+  </body>
+</html>
