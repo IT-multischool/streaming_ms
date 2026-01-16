@@ -1,0 +1,259 @@
+/* Login/Register Page Styles */
+.sign--page {
+  min-height: 100vh;
+  display: flex;
+  background: linear-gradient(135deg, #141414 0%, #1e1f21 100%);
+}
+
+.sign__container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.sign__form-wrapper {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 60px;
+  overflow-y: auto;
+}
+
+.sign__image-wrapper {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1e1f21;
+  position: relative;
+  overflow: hidden;
+}
+
+.sign__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.sign__content {
+  width: 100%;
+  max-width: 480px;
+}
+
+.sign__form {
+  background-color: transparent !important;
+  border-radius: 24px;
+  padding: 40px 20px !important;
+  border: none !important;
+  width: 70% !important;
+  max-width: none !important;
+  margin: 0 auto;
+}
+
+.sign__form--comments {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin-top: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.sign__form--bg {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.sign__logo {
+  display: block;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.sign__logo img {
+  height: 100px;
+  width: auto;
+}
+
+.sign__title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.sign__error {
+  background-color: #ce2b2b;
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.sign__success {
+  background-color: #00d084;
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.sign__success p {
+  margin: 8px 0;
+}
+
+.sign__success strong {
+  font-weight: 600;
+}
+
+.sign__group {
+  margin-bottom: 20px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-sizing: border-box !important;
+}
+
+.sign__label {
+  font-size: 16px;
+  color: #898e95;
+  margin-bottom: 6px;
+  display: block;
+  padding-left: 24px;
+}
+
+.sign__label b {
+  color: #ce2b2b;
+  font-weight: 500;
+}
+
+.sign__label--pl {
+  padding-left: 0;
+}
+
+.sign__input {
+  width: 100% !important;
+  max-width: 100% !important;
+  background-color: #1e1f21;
+  border: 1px solid transparent;
+  height: 56px !important;
+  min-height: 56px !important;
+  color: #fff;
+  font-size: 16px !important;
+  border-radius: 9999px;
+  padding: 0 28px !important;
+  box-sizing: border-box !important;
+  transition: border-color 0.3s ease;
+  display: block !important;
+}
+
+.sign__input:focus {
+  outline: none;
+  border-color: #6C5F8D;
+}
+
+.sign__input::placeholder {
+  color: #5a5a5a;
+}
+
+.sign__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sign__checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.sign__checkbox label {
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.sign__checkbox a {
+  color: #6C5F8D;
+  text-decoration: none;
+}
+
+.sign__checkbox a:hover {
+  text-decoration: underline;
+}
+
+.sign__btn {
+  width: 100% !important;
+  height: 56px !important;
+  min-height: 56px !important;
+  background-color: #6C5F8D;
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  font-size: 18px !important;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.sign__btn:hover:not(:disabled) {
+  background-color: #5a4d6f;
+}
+
+.sign__btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.sign__text {
+  text-align: center;
+  color: #898e95;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.sign__text a {
+  color: #6C5F8D;
+  text-decoration: none;
+}
+
+.sign__text a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .sign__container {
+    flex-direction: column;
+  }
+
+  .sign__form-wrapper {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .sign__image-wrapper {
+    width: 100%;
+    height: 300px;
+    order: -1;
+  }
+
+  .sign__form {
+    padding: 30px 20px;
+    width: 90%;
+  }
+
+  .sign__title {
+    font-size: 24px;
+  }
+}
+

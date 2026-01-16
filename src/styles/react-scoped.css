@@ -1,0 +1,38 @@
+/* 
+  Wrapper para escopar todos os estilos do React dentro de #root
+  Este arquivo deve ser importado ANTES de outros CSS no main.jsx
+  e depois de todos os outros CSS para sobrescrever estilos globais
+*/
+
+/* Quando #root está visível, isolar completamente */
+#root[style*="display: block"],
+#root:not([style*="display: none"]) {
+  /* Isolamento completo */
+  isolation: isolate;
+  contain: layout style paint;
+}
+
+/* Reverter efeitos do Bootstrap no body quando #root não está visível */
+body:not(:has(#root[style*="display: block"])) {
+  /* Restaurar valores originais que o Bootstrap pode ter modificado */
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+/* Garantir que estilos do Bootstrap só afetem dentro de #root */
+body:has(#root[style*="display: block"]) {
+  /* Quando React está ativo, permitir que Bootstrap afete apenas #root */
+}
+
+/* Resetar estilos globais do Bootstrap fora do #root */
+body:not(:has(#root[style*="display: block"])) * {
+  /* Remover estilos específicos do Bootstrap que podem estar afetando */
+}
+
+#root *,
+#root *::before,
+#root *::after {
+  box-sizing: border-box;
+}
+

@@ -1,0 +1,25 @@
+/* Header styles are in main.css */
+
+.header__logout-btn {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.header__logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.header__logout-btn svg {
+  stroke: #fff;
+}
+
